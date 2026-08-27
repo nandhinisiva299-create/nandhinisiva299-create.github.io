@@ -26,35 +26,26 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
-        /* Neon Glow Effect on Name */
+        /* Soft, Elegant Glow Effect on Name */
         .neon-glow {
-            animation: neonPulse 4s ease-in-out infinite alternate;
+            animation: neonPulse 5s ease-in-out infinite alternate;
         }
 
         @keyframes neonPulse {
             0% {
                 text-shadow:
-                    0 0 7px #fff,
-                    0 0 10px #fff,
-                    0 0 21px #f5c842,
-                    0 0 42px #f5c842,
-                    0 0 82px #f5c842;
+                    0 0 10px rgba(245, 200, 66, 0.4),
+                    0 0 20px rgba(245, 200, 66, 0.15);
             }
             50% {
                 text-shadow:
-                    0 0 7px #fff,
-                    0 0 10px #fff,
-                    0 0 21px #f472b6,
-                    0 0 42px #f472b6,
-                    0 0 82px #f472b6;
+                    0 0 10px rgba(244, 114, 182, 0.4),
+                    0 0 20px rgba(244, 114, 182, 0.15);
             }
             100% {
                 text-shadow:
-                    0 0 7px #fff,
-                    0 0 10px #fff,
-                    0 0 21px #38bdf8,
-                    0 0 42px #38bdf8,
-                    0 0 82px #38bdf8;
+                    0 0 10px rgba(56, 189, 248, 0.4),
+                    0 0 20px rgba(56, 189, 248, 0.15);
             }
         }
 
