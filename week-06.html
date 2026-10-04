@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 06 — Laser Cutting & 3D Printing | Nandhini Sivakumar</title>
+    <meta name="description" content="A hands-on step-by-step exploration of digital fabrication: 2D vector preparation in RDWorks for laser cutting & 3D mesh slicing in Bambu Studio by Nandhini Sivakumar.">
+    
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#334155',
+                            700: '#1e293b',
+                            800: '#0f172a',
+                            850: '#0b1120',
+                            900: '#080d1a',
+                            950: '#050811'
+                        },
+                        brand: {
+                            gold: '#b45309',
+                            orange: '#ea580c',
+                            cyan: '#0284c7',
+                            indigo: '#4f46e5',
+                            emerald: '#059669',
+                            dark: '#0f172a'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['"Outfit"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                        cinzel: ['"Cinzel"', 'serif'],
+                        mono: ['"JetBrains Mono"', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+
+    <style>
+        h1, h2, h3, .font-serif, .font-display {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.015em;
+        }
+
+        body {
+            background: radial-gradient(1200px circle at 50% 0%, #ffffff 0%, #f8fafc 45%, #eef2f6 100%);
+            color: #0f172a;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Aurora Layers */
+        .aurora-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .aurora-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.35;
+            will-change: transform;
+        }
+        .aurora-1 {
+            top: -10%; left: 15%;
+            width: 55vw; height: 55vw;
+            background: radial-gradient(circle, rgba(234, 88, 12, 0.20), rgba(99, 102, 241, 0.12), transparent 70%);
+            animation: orbFloat1 20s ease-in-out infinite alternate;
+        }
+        .aurora-2 {
+            bottom: -10%; right: 10%;
+            width: 50vw; height: 50vw;
+            background: radial-gradient(circle, rgba(2, 132, 199, 0.22), rgba(234, 88, 12, 0.15), transparent 70%);
+            animation: orbFloat2 24s ease-in-out infinite alternate;
+        }
+        @keyframes orbFloat1 {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(70px, 50px) scale(1.1); }
+        }
+        @keyframes orbFloat2 {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-60px, -40px) scale(1.15); }
+        }
+
+        /* Glassmorphism Panels */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06), 0 2px 6px rgba(15, 23, 42, 0.04);
+        }
+        .glass-panel-subtle {
+            background: rgba(248, 250, 252, 0.85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(203, 213, 225, 0.6);
+        }
+
+        /* Step Card Styling */
+        .step-container {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .step-container:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 35px -8px rgba(15, 23, 42, 0.12);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #ea580c, #0284c7);
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen text-obsidian-800 antialiased selection:bg-amber-100 selection:text-obsidian-900">
+
+    <!-- Reading Progress Bar -->
+    <div id="reading-bar" class="fixed top-0 left-0 h-1.5 bg-gradient-to-r from-orange-500 via-amber-500 to-cyan-500 z-50 transition-all duration-75" style="width: 0%"></div>
+
+    <!-- Ambient Aurora Background -->
+    <div class="aurora-bg" aria-hidden="true">
+        <div class="aurora-orb aurora-1"></div>
+        <div class="aurora-orb aurora-2"></div>
+    </div>
+
+    <!-- Top Sticky Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-white/85 backdrop-blur-md border-b border-slate-200 transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
+            <a href="index.html#protosem" class="group inline-flex items-center gap-2.5 text-xs sm:text-sm font-semibold text-slate-700 hover:text-orange-600 transition-colors">
+                <span class="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center group-hover:-translate-x-1 transition-transform">←</span>
+                <span>Back to ProtoSem Roadmap</span>
+            </a>
+            <div class="flex items-center gap-3">
+                <span class="hidden md:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-[11px] font-mono font-bold text-amber-800 uppercase tracking-widest">
+                    Phase 02 • Week 06
+                </span>
+                <span class="text-xs font-mono text-slate-500">Nandhini Sivakumar</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-16 space-y-16 relative z-10">
+
+        <!-- Header Hero -->
+        <div class="text-center space-y-6 max-w-3xl mx-auto">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-orange-50 to-cyan-50 border border-orange-200/60 shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
+                <span class="font-mono text-xs font-bold text-slate-700 uppercase tracking-wider">Digital Fabrication Sprint</span>
+            </div>
+            
+            <h1 class="text-3xl sm:text-5xl md:text-6xl font-black text-slate-900 leading-[1.15] tracking-tight">
+                WEEK 6 — LASER CUTTING & 3D PRINTING
+            </h1>
+            
+            <p class="text-base sm:text-lg text-slate-600 leading-relaxed font-sans font-normal">
+                A hands-on practical exploration transforming 2D digital artwork and 3D geometric models into physical objects using subtractive (RDWorks) and additive (Bambu Studio) manufacturing technologies.
+            </p>
+
+            <!-- Quick Jump Pills -->
+            <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+                <a href="#laser-cutting" class="px-5 py-2.5 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-700 font-semibold text-xs sm:text-sm hover:bg-orange-500 hover:text-white transition-all shadow-sm">
+                    🔥 Part 1: Laser Cutting
+                </a>
+                <a href="#3d-printing" class="px-5 py-2.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-700 font-semibold text-xs sm:text-sm hover:bg-cyan-500 hover:text-white transition-all shadow-sm">
+                    🖨️ Part 2: 3D Printing
+                </a>
+                <a href="#learning-outcome" class="px-5 py-2.5 rounded-full bg-slate-100 border border-slate-300 text-slate-700 font-semibold text-xs sm:text-sm hover:bg-slate-800 hover:text-white transition-all shadow-sm">
+                    🎯 Learning Outcomes
+                </a>
+            </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- PART 1: LASER CUTTING -->
+        <!-- ========================================================================= -->
+        <section id="laser-cutting" class="space-y-10">
+            <!-- Section Header -->
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl border-l-4 border-l-orange-500 space-y-4">
+                <div class="flex items-center gap-2 text-xs font-mono font-bold text-orange-600 uppercase tracking-widest">
+                    <span>🔥</span> Subtractive Digital Fabrication
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-black text-slate-900">
+                    PART 1: LASER CUTTING WITH RDWORKS
+                </h2>
+                <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                    We selected an image design, prepared and converted the image into a suitable format, and imported the design into <strong>RDWorks</strong>. In RDWorks, we arranged and prepared the design for the laser-cutting process before producing the physical model with the laser cutter.
+                </p>
+
+                <!-- Workflow Pipeline Flowchart -->
+                <div class="bg-slate-900 text-white rounded-2xl p-4 sm:p-5 flex flex-wrap items-center gap-2 text-xs sm:text-sm font-medium">
+                    <span class="text-slate-400 font-mono uppercase text-xs mr-2">Workflow:</span>
+                    <span class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-orange-400 font-bold">Image Selection</span>
+                    <span class="text-slate-500">➔</span>
+                    <span class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-orange-400 font-bold">Conversion / Preparation</span>
+                    <span class="text-slate-500">➔</span>
+                    <span class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-orange-400 font-bold">RDWorks Setup</span>
+                    <span class="text-slate-500">➔</span>
+                    <span class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-orange-400 font-bold">Laser Cutting</span>
+                    <span class="text-slate-500">➔</span>
+                    <span class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-emerald-400 font-bold">Final Model</span>
+                </div>
+            </div>
+
+            <!-- Step-by-Step Practical Experience (Alternating Layout) -->
+            <div class="space-y-8">
+
+                <!-- STEP 1: Text Left | Photo Right -->
+                <div class="step-container glass-panel p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-3 order-1">
+                        <span class="inline-block px-3 py-1 rounded-full bg-orange-100 text-orange-800 font-mono text-xs font-bold uppercase">
+                            Step 1 – Selecting the Image
+                        </span>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Selecting the Artwork</h3>
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                            I started by selecting the image and design that I wanted to reproduce using the laser cutter. The choice focused on clear, high-contrast graphic boundaries that would readily translate into crisp laser paths.
+                        </p>
+                    </div>
+                    <div class="space-y-2 order-2">
+                        <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 aspect-[16/10] flex items-center justify-center relative shadow-inner">
+                            <svg class="w-full h-full p-4" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="100%" height="100%" fill="#0f172a" rx="8"/>
+                                <circle cx="200" cy="115" r="65" fill="none" stroke="#ea580c" stroke-width="3" stroke-dasharray="4,4"/>
+                                <polygon points="200,65 240,140 160,140" fill="rgba(234, 88, 12, 0.25)" stroke="#ea580c" stroke-width="2.5"/>
+                                <circle cx="200" cy="115" r="20" fill="#ea580c"/>
+                                <text x="200" y="215" fill="#94a3b8" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">Selected Source Design (High-Contrast 2D Graphic)</text>
+                            </svg>
+                        </div>
+                        <p class="text-xs text-slate-500 font-medium italic text-center">
+                            📸 Photo: Original selected image ready for laser path conversion.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Photo Left | Text Right -->
+                <div class="step-container glass-panel p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-2 order-2 md:order-1">
+                        <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 aspect-[16/10] flex items-center justify-center relative shadow-inner">
+                            <svg class="w-full h-full p-4" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="100%" height="100%" fill="#0f172a" rx="8"/>
+                                <path d="M 120 170 Q 200 40 280 170 Z" fill="rgba(234,88,12,0.15)" stroke="#fb923c" stroke-width="2.5"/>
+                                <circle cx="120" cy="170" r="5" fill="#ea580c" stroke="#fff" stroke-width="1.5"/>
+                                <circle cx="200" cy="40" r="5" fill="#ea580c" stroke="#fff" stroke-width="1.5"/>
+                                <circle cx="280" cy="170" r="5" fill="#ea580c" stroke="#fff" stroke-width="1.5"/>
+                                <text x="200" y="215" fill="#94a3b8" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">Vectorized Outlines & Closed Path Extraction</text>
+                            </svg>
+                        </div>
+                        <p class="text-xs text-slate-500 font-medium italic text-center">
+                            📸 Photo: Prepared vector contours and cleaned cutting geometry.
+                        </p>
+                    </div>
+                    <div class="space-y-3 order-1 md:order-2">
+                        <span class="inline-block px-3 py-1 rounded-full bg-orange-100 text-orange-800 font-mono text-xs font-bold uppercase">
+                            Step 2 – Preparing the Design
+                        </span>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Image Conversion & Prep</h3>
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                            I prepared and converted the image into a clean vector format. We adjusted the contrast, removed noise, and generated closed outline paths so the machine controller could recognize unambiguous cutting and engraving lines.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Text Left | Photo Right -->
+                <div class="step-container glass-panel p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-3 order-1">
+                        <span class="inline-block px-3 py-1 rounded-full bg-orange-100 text-orange-800 font-mono text-xs font-bold uppercase">
+                            Step 3 – RDWorks
+                        </span>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Setup inside RDWorks</h3>
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                            I imported the prepared design into <strong>RDWorks</strong>. In RDWorks, the design was positioned relative to the machine origin, and laser parameters including cutting speed (mm/s) and power percentage (%) were configured for accurate execution.
+                        </p>
+                    </div>
+                    <div class="space-y-2 order-2">
+                        <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 aspect-[16/10] flex items-center justify-center relative shadow-inner">
+                            <svg class="w-full h-full p-4" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="100%" height="100%" fill="#0f172a" rx="8"/>
+                                <rect x="30" y="30" width="340" height="150" fill="#1e293b" stroke="#334155" rx="4"/>
+                                <rect x="140" y="60" width="120" height="80" rx="4" fill="none" stroke="#22c55e" stroke-width="2"/>
+                                <circle cx="200" cy="100" r="24" fill="none" stroke="#ef4444" stroke-width="2"/>
+                                <text x="45" y="50" fill="#94a3b8" font-size="10" font-family="monospace">RDWorks V8 — Speed: 25mm/s | Power: 65%</text>
+                                <text x="200" y="215" fill="#94a3b8" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">RDWorks Interface: Layer Parameters & Bed Layout</text>
+                            </svg>
+                        </div>
+                        <p class="text-xs text-slate-500 font-medium italic text-center">
+                            📸 Photo: Screenshot of the design inside RDWorks software.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- STEP 4: Photo Left | Text Right -->
+                <div class="step-container glass-panel p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-2 order-2 md:order-1">
+                        <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 aspect-[16/10] flex items-center justify-center relative shadow-inner">
+                            <svg class="w-full h-full p-4" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="100%" height="100%" fill="#090d16" rx="8"/>
+                                <rect x="50" y="50" width="300" height="130" rx="4" fill="#78350f" opacity="0.85"/>
+                                <rect x="180" y="30" width="40" height="35" rx="2" fill="#64748b"/>
+                                <line x1="200" y1="65" x2="200" y2="110" stroke="#fef08a" stroke-width="3"/>
+                                <circle cx="200" cy="110" r="8" fill="#ea580c"/>
+                                <circle cx="200" cy="110" r="2" fill="#fff"/>
+                                <text x="200" y="215" fill="#94a3b8" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">Laser Machine: Active Focal Cut on Workpiece</text>
+                            </svg>
+                        </div>
+                        <p class="text-xs text-slate-500 font-medium italic text-center">
+                            📸 Photo: Active laser-cutting process on the machine bed.
+                        </p>
+                    </div>
+                    <div class="space-y-3 order-1 md:order-2">
+                        <span class="inline-block px-3 py-1 rounded-full bg-orange-100 text-orange-800 font-mono text-xs font-bold uppercase">
+                            Step 4 – Laser Cutting
+                        </span>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Carrying Out the Cut</h3>
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                            After preparing the file, I transferred it to the laser-cutting machine and positioned the material properly on the honeycomb bed. The laser cutter followed the digital paths and accurately reproduced the design.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- STEP 5: Text Left | Photo Right -->
+                <div class="step-container glass-panel p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-3 order-1">
+                        <span class="inline-block px-3 py-1 rounded-full bg-orange-100 text-orange-800 font-mono text-xs font-bold uppercase">
+                            Step 5 – Final Laser-Cut Model
+                        </span>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Completed Laser Part</h3>
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                            The finished physical model was extracted from the cutting bed. The edges were clean and well-defined, perfectly replicating the digital vector geometry with tight dimensional accuracy.
+                        </p>
+                    </div>
+                    <div class="space-y-2 order-2">
+                        <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 aspect-[16/10] flex items-center justify-center relative shadow-inner">
+                            <svg class="w-full h-full p-4" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="100%" height="100%" fill="#0f172a" rx="8"/>
+                                <g transform="translate(70, 40)">
+                                    <rect x="0" y="0" width="260" height="130" rx="12" fill="#b45309" stroke="#d97706" stroke-width="2"/>
+                                    <polygon points="130,20 170,85 90,85" fill="#0f172a"/>
+                                    <circle cx="55" cy="65" r="20" fill="#0f172a"/>
+                                    <circle cx="205" cy="65" r="20" fill="#0f172a"/>
+                                </g>
+                                <text x="200" y="215" fill="#94a3b8" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">Finished Laser-Cut Physical Part</text>
+                            </svg>
+                        </div>
+                        <p class="text-xs text-slate-500 font-medium italic text-center">
+                            📸 Photo: Final laser-cut physical model.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- PART 2: 3D PRINTING -->
+        <!-- ========================================================================= -->
+        <section id="3d-printing" class="space-y-10">
+            <!-- Section Header -->
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl border-l-4 border-l-cyan-500 space-y-4">
+                <div class="flex items-center gap-2 text-xs font-mono font-bold text-cyan-600 uppercase tracking-widest">
+                    <span>🖨️</span> Additive Digital Fabrication
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-black text-slate-900">
+                    PART 2: 3D PRINTING WITH BAMBU STUDIO
+                </h2>
+                <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                    We selected a 3D model from <strong>Printables.com</strong> and downloaded it in <strong>STL format</strong>. We imported the STL file into <strong>Bambu Studio</strong>, positioned and prepared the model for printing, sliced the file, and produced the final physical model on the 3D printer.
+                </p>
+
+                <!-- Workflow Pipeline Flowchart -->
+                <div class="bg-slate-900 text-white rounded-2xl p-4 sm:p-5 flex flex-wrap items-center gap-2 text-xs sm:text-sm font-medium">
+                    <span class="text-slate-400 font-mono uppercase text-xs mr-2">Workflow:</span>
+                    <span class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-cyan-400 font-bold">Printable.com</span>
+                    <span class="text-slate-500">➔</span>
+                    <span class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-cyan-400 font-bold">STL File</span>
+                    <span class="text-slate-500">➔</span>
+                    <span class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-cyan-400 font-bold">Bambu Studio</span>
+                    <span class="text-slate-500">➔</span>
+                    <span class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-cyan-400 font-bold">Model Prep & Slicing</span>
+                    <span class="text-slate-500">➔</span>
+                    <span class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-cyan-400 font-bold">3D Printing</span>
+                    <span class="text-slate-500">➔</span>
+                    <span class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-emerald-400 font-bold">Final Model</span>
+                </div>
+            </div>
+
+            <!-- Step-by-Step Practical Experience (Alternating Layout) -->
+            <div class="space-y-8">
+
+                <!-- STEP 1: Text Left | Photo Right -->
+                <div class="step-container glass-panel p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-3 order-1">
+                        <span class="inline-block px-3 py-1 rounded-full bg-cyan-100 text-cyan-800 font-mono text-xs font-bold uppercase">
+                            Step 1 – Selecting the 3D Model
+                        </span>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Discovering on Printable.com</h3>
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                            I started by browsing and selecting a functional 3D design from <strong>Printables.com</strong> that was well-optimized for additive FDM printing.
+                        </p>
+                    </div>
+                    <div class="space-y-2 order-2">
+                        <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 aspect-[16/10] flex items-center justify-center relative shadow-inner">
+                            <svg class="w-full h-full p-4" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="100%" height="100%" fill="#091422" rx="8"/>
+                                <rect x="30" y="25" width="340" height="160" rx="6" fill="#0f172a" stroke="#1e293b"/>
+                                <polygon points="120,60 160,100 120,140 80,100" fill="rgba(2, 132, 199, 0.3)" stroke="#0284c7" stroke-width="2"/>
+                                <rect x="190" y="60" width="150" height="16" rx="3" fill="#334155"/>
+                                <rect x="190" y="85" width="110" height="10" rx="2" fill="#475569"/>
+                                <rect x="190" y="115" width="100" height="24" rx="4" fill="#0284c7"/>
+                                <text x="240" y="131" fill="#fff" font-size="10" font-family="sans-serif" font-weight="bold" text-anchor="middle">DOWNLOAD STL</text>
+                                <text x="200" y="215" fill="#94a3b8" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">Printables.com Catalog & Model Selection</text>
+                            </svg>
+                        </div>
+                        <p class="text-xs text-slate-500 font-medium italic text-center">
+                            📸 Photo: Selected 3D model on Printables.com.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Photo Left | Text Right -->
+                <div class="step-container glass-panel p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-2 order-2 md:order-1">
+                        <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 aspect-[16/10] flex items-center justify-center relative shadow-inner">
+                            <svg class="w-full h-full p-4" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="100%" height="100%" fill="#0b1120" rx="8"/>
+                                <g transform="translate(110, 35)">
+                                    <polygon points="90,10 170,55 90,100 10,55" fill="none" stroke="#38bdf8" stroke-width="2"/>
+                                    <polygon points="10,55 90,100 90,150 10,105" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" stroke-width="2"/>
+                                    <polygon points="170,55 90,100 90,150 170,105" fill="rgba(2, 132, 199, 0.25)" stroke="#38bdf8" stroke-width="2"/>
+                                    <line x1="90" y1="10" x2="90" y2="100" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="2,2"/>
+                                </g>
+                                <text x="200" y="215" fill="#94a3b8" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">STL Triangular Mesh Geometry Format</text>
+                            </svg>
+                        </div>
+                        <p class="text-xs text-slate-500 font-medium italic text-center">
+                            📸 Photo: Downloaded 3D geometry in STL format.
+                        </p>
+                    </div>
+                    <div class="space-y-3 order-1 md:order-2">
+                        <span class="inline-block px-3 py-1 rounded-full bg-cyan-100 text-cyan-800 font-mono text-xs font-bold uppercase">
+                            Step 2 – STL File
+                        </span>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Downloading the STL File</h3>
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                            I downloaded the model in **STL format**, which represents the 3D surface geometry through interconnected triangular meshes, making it ready for digital slicing.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Text Left | Photo Right -->
+                <div class="step-container glass-panel p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-3 order-1">
+                        <span class="inline-block px-3 py-1 rounded-full bg-cyan-100 text-cyan-800 font-mono text-xs font-bold uppercase">
+                            Step 3 – Bambu Studio
+                        </span>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Importing into Bambu Studio</h3>
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                            I imported the STL file into **Bambu Studio**. Bambu Studio converted the imported model into a printable setup and placed it squarely onto the virtual build plate.
+                        </p>
+                    </div>
+                    <div class="space-y-2 order-2">
+                        <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 aspect-[16/10] flex items-center justify-center relative shadow-inner">
+                            <svg class="w-full h-full p-4" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="100%" height="100%" fill="#0a101d" rx="8"/>
+                                <polygon points="200,55 320,105 200,155 80,105" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+                                <polygon points="200,70 240,90 200,110 160,90" fill="#0284c7" stroke="#e0f2fe"/>
+                                <polygon points="160,90 200,110 200,140 160,120" fill="#0369a1" stroke="#e0f2fe"/>
+                                <polygon points="240,90 200,110 200,140 240,120" fill="#075985" stroke="#e0f2fe"/>
+                                <text x="200" y="215" fill="#94a3b8" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">Bambu Studio: STL Loaded on Virtual Bed</text>
+                            </svg>
+                        </div>
+                        <p class="text-xs text-slate-500 font-medium italic text-center">
+                            📸 Photo: Model inside the Bambu Studio workspace.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- STEP 4: Photo Left | Text Right -->
+                <div class="step-container glass-panel p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-2 order-2 md:order-1">
+                        <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 aspect-[16/10] flex items-center justify-center relative shadow-inner">
+                            <svg class="w-full h-full p-4" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="100%" height="100%" fill="#08101e" rx="8"/>
+                                <g transform="translate(110, 25)">
+                                    <polygon points="90,15 170,50 90,85 10,50" fill="none" stroke="#ec4899" stroke-width="2"/>
+                                    <polygon points="90,30 170,65 90,100 10,65" fill="none" stroke="#a855f7" stroke-width="2"/>
+                                    <polygon points="90,45 170,80 90,115 10,80" fill="none" stroke="#0284c7" stroke-width="2"/>
+                                    <polygon points="90,60 170,95 90,130 10,95" fill="none" stroke="#22c55e" stroke-width="2"/>
+                                    <polygon points="90,75 170,110 90,145 10,110" fill="rgba(34, 197, 94, 0.2)" stroke="#eab308" stroke-width="2"/>
+                                </g>
+                                <text x="200" y="215" fill="#94a3b8" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">Slicing Preview: Layer-by-Layer Toolpaths & Infill</text>
+                            </svg>
+                        </div>
+                        <p class="text-xs text-slate-500 font-medium italic text-center">
+                            📸 Photo: Bambu Studio slicing and preparation stage.
+                        </p>
+                    </div>
+                    <div class="space-y-3 order-1 md:order-2">
+                        <span class="inline-block px-3 py-1 rounded-full bg-cyan-100 text-cyan-800 font-mono text-xs font-bold uppercase">
+                            Step 4 – Preparing & Slicing
+                        </span>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Positioning, Infill & Slicing</h3>
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                            I checked the model orientation and prepared it for printing. The model was sliced into printable horizontal layers so that the 3D printer could build the object layer by layer.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- STEP 5: Text Left | Photo Right -->
+                <div class="step-container glass-panel p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-3 order-1">
+                        <span class="inline-block px-3 py-1 rounded-full bg-cyan-100 text-cyan-800 font-mono text-xs font-bold uppercase">
+                            Step 5 – 3D Printing
+                        </span>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">3D Printing Execution</h3>
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                            Finally, the prepared model was sent to the 3D printer. The printer extruded molten filament through the heated nozzle onto the build plate, progressively materializing the object.
+                        </p>
+                    </div>
+                    <div class="space-y-2 order-2">
+                        <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 aspect-[16/10] flex items-center justify-center relative shadow-inner">
+                            <svg class="w-full h-full p-4" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="100%" height="100%" fill="#080e1a" rx="8"/>
+                                <rect x="90" y="155" width="220" height="15" rx="2" fill="#1e293b" stroke="#0284c7" stroke-width="1.5"/>
+                                <polygon points="200,115 230,130 200,145 170,130" fill="#0284c7" stroke="#67e8f9"/>
+                                <rect x="185" y="60" width="30" height="35" rx="2" fill="#64748b"/>
+                                <polygon points="195,95 205,95 200,112" fill="#eab308"/>
+                                <circle cx="200" cy="113" r="2" fill="#fff"/>
+                                <text x="200" y="215" fill="#94a3b8" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">3D Printer Extruding Layer by Layer</text>
+                            </svg>
+                        </div>
+                        <p class="text-xs text-slate-500 font-medium italic text-center">
+                            📸 Photo: 3D printer actively building the physical model.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- STEP 6: Photo Left | Text Right -->
+                <div class="step-container glass-panel p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-2 order-2 md:order-1">
+                        <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 aspect-[16/10] flex items-center justify-center relative shadow-inner">
+                            <svg class="w-full h-full p-4" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="100%" height="100%" fill="#0a1220" rx="8"/>
+                                <g transform="translate(120, 30)">
+                                    <polygon points="80,15 150,55 80,95 10,55" fill="#0284c7" stroke="#bae6fd" stroke-width="1.5"/>
+                                    <polygon points="10,55 80,95 80,145 10,105" fill="#0369a1" stroke="#bae6fd" stroke-width="1.5"/>
+                                    <polygon points="150,55 80,95 80,145 150,105" fill="#075985" stroke="#bae6fd" stroke-width="1.5"/>
+                                </g>
+                                <text x="200" y="215" fill="#94a3b8" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">Finished 3D Printed Physical Model</text>
+                            </svg>
+                        </div>
+                        <p class="text-xs text-slate-500 font-medium italic text-center">
+                            📸 Photo: Final 3D printed physical model.
+                        </p>
+                    </div>
+                    <div class="space-y-3 order-1 md:order-2">
+                        <span class="inline-block px-3 py-1 rounded-full bg-cyan-100 text-cyan-800 font-mono text-xs font-bold uppercase">
+                            Step 6 – Final 3D Model
+                        </span>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Completed 3D Print</h3>
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                            Through this activity, I understood the complete basic workflow of 3D printing — from an <strong>STL file → preparing the model in Bambu Studio → slicing → physical 3D print</strong>.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- LEARNING OUTCOME SECTION -->
+        <!-- ========================================================================= -->
+        <section id="learning-outcome" class="glass-panel p-8 sm:p-12 rounded-3xl border-2 border-indigo-200 space-y-6 shadow-xl relative overflow-hidden">
+            <div class="flex items-center gap-2 text-xs font-mono font-bold text-indigo-600 uppercase tracking-widest">
+                <span>🎯</span> Practical Synthesis
+            </div>
+
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900">
+                WEEK 6 LEARNING OUTCOME
+            </h2>
+
+            <p class="text-slate-700 text-base sm:text-lg leading-relaxed">
+                This week's activities helped me understand the practical workflow of <strong>digital design to physical manufacturing</strong>. I learned how to prepare images for laser cutting using <strong>RDWorks</strong> and how to work with <strong>STL files and Bambu Studio</strong> for 3D printing.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+                <div class="bg-orange-50/60 border border-orange-200 p-6 rounded-2xl space-y-2">
+                    <h3 class="font-bold text-orange-950 text-base flex items-center gap-2">
+                        <span>🔥</span> Subtractive (Laser Cutting)
+                    </h3>
+                    <p class="text-xs font-mono text-orange-700 font-semibold">
+                        Digital Design → RDWorks → Laser Cutter → Physical Design
+                    </p>
+                    <p class="text-xs text-slate-600 leading-relaxed pt-1">
+                        Learned the importance of vector path preparation, contrast adjustments, and setting machine speed and power layers.
+                    </p>
+                </div>
+
+                <div class="bg-cyan-50/60 border border-cyan-200 p-6 rounded-2xl space-y-2">
+                    <h3 class="font-bold text-cyan-950 text-base flex items-center gap-2">
+                        <span>🖨️</span> Additive (3D Printing)
+                    </h3>
+                    <p class="text-xs font-mono text-cyan-700 font-semibold">
+                        STL File → Bambu Studio → Slicing → 3D Printer → Physical Model
+                    </p>
+                    <p class="text-xs text-slate-600 leading-relaxed pt-1">
+                        Understood 3D triangular meshes, bed orientation, infill configurations, and slicing layer by layer into G-code.
+                    </p>
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <a href="index.html#protosem" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-900 text-white font-semibold text-sm hover:bg-orange-600 transition-colors">
+                    <span>←</span> Return to ProtoSem Portfolio
+                </a>
+                <span class="text-xs font-mono text-slate-500">PRICE ProtoSem • Nandhini Sivakumar</span>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Reading Bar Script -->
+    <script>
+        window.addEventListener('scroll', () => {
+            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (window.scrollY / totalHeight) * 100;
+            document.getElementById('reading-bar').style.width = progress + '%';
+        });
+    </script>
+</body>
+</html>
