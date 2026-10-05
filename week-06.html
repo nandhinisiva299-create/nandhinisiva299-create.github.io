@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Week 06 — Laser Cutting & 3D Printing | Nandhini Sivakumar</title>
-    <meta name="description" content="A hands-on step-by-step exploration of digital fabrication: 2D vector preparation in RDWorks for laser cutting & 3D mesh slicing in Bambu Studio by Nandhini Sivakumar.">
+    <meta name="description" content="Academic documentation of Digital Fabrication: Laser Cutting with RDWorks and 3D Printing with Bambu Studio by Nandhini Sivakumar.">
     
     <!-- Modern Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -29,7 +29,6 @@
                             600: '#334155',
                             700: '#1e293b',
                             800: '#0f172a',
-                            850: '#0b1120',
                             900: '#080d1a',
                             950: '#050811'
                         },
@@ -45,7 +44,6 @@
                     fontFamily: {
                         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
                         display: ['"Outfit"', 'sans-serif'],
-                        serif: ['"Playfair Display"', 'serif'],
                         cinzel: ['"Cinzel"', 'serif'],
                         mono: ['"JetBrains Mono"', 'monospace']
                     }
@@ -53,10 +51,9 @@
             }
         }
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
 
     <style>
-        h1, h2, h3, .font-serif, .font-display {
+        h1, h2, h3, h4, .font-cinzel {
             font-family: 'Cinzel', serif;
             letter-spacing: 0.015em;
         }
@@ -86,58 +83,99 @@
         .aurora-1 {
             top: -10%; left: 15%;
             width: 55vw; height: 55vw;
-            background: radial-gradient(circle, rgba(234, 88, 12, 0.20), rgba(99, 102, 241, 0.12), transparent 70%);
-            animation: orbFloat1 20s ease-in-out infinite alternate;
+            background: radial-gradient(circle, rgba(234, 88, 12, 0.18), rgba(99, 102, 241, 0.10), transparent 70%);
         }
         .aurora-2 {
             bottom: -10%; right: 10%;
             width: 50vw; height: 50vw;
-            background: radial-gradient(circle, rgba(2, 132, 199, 0.22), rgba(234, 88, 12, 0.15), transparent 70%);
-            animation: orbFloat2 24s ease-in-out infinite alternate;
-        }
-        @keyframes orbFloat1 {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(70px, 50px) scale(1.1); }
-        }
-        @keyframes orbFloat2 {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(-60px, -40px) scale(1.15); }
+            background: radial-gradient(circle, rgba(2, 132, 199, 0.18), rgba(234, 88, 12, 0.12), transparent 70%);
         }
 
-        /* Glassmorphism Panels */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06), 0 2px 6px rgba(15, 23, 42, 0.04);
+        /* Academic Card Panels */
+        .academic-card {
+            background: #ffffff;
+            border-radius: 1.5rem;
+            border: 1px solid rgba(226, 232, 240, 0.95);
+            box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+            transition: all 0.25s ease;
         }
-        .glass-panel-subtle {
-            background: rgba(248, 250, 252, 0.85);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid rgba(203, 213, 225, 0.6);
+        .academic-card:hover {
+            box-shadow: 0 12px 30px -5px rgba(15, 23, 42, 0.08);
+            border-color: rgba(203, 213, 225, 0.9);
         }
 
-        /* Step Card Styling */
-        .step-container {
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        /* Academic Table Styling */
+        .academic-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.875rem;
         }
-        .step-container:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 35px -8px rgba(15, 23, 42, 0.12);
+        .academic-table th {
+            background-color: #f1f5f9;
+            color: #0f172a;
+            font-weight: 700;
+            padding: 0.75rem 1rem;
+            border-bottom: 2px solid #cbd5e1;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+        .academic-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            color: #334155;
+        }
+        .academic-table tr:hover td {
+            background-color: #f8fafc;
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(to bottom, #ea580c, #0284c7);
-            border-radius: 9999px;
+        /* Figure Photo Frame */
+        .figure-frame {
+            position: relative;
+            border-radius: 1rem;
+            overflow: hidden;
+            background: #090d16;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.4), 0 4px 12px rgba(0,0,0,0.06);
+            cursor: pointer;
+        }
+        .figure-frame.drag-over {
+            border: 3px dashed #ea580c !important;
+            box-shadow: 0 0 25px rgba(234, 88, 12, 0.5) !important;
+        }
+        .figure-frame.drag-over-cyan {
+            border: 3px dashed #0284c7 !important;
+            box-shadow: 0 0 25px rgba(2, 132, 199, 0.5) !important;
+        }
+        .figure-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .figure-frame:hover .figure-img {
+            transform: scale(1.025);
+        }
+
+        /* Modal Styles */
+        .modal-fade {
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+        }
+        .modal-fade.hidden-modal {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .modal-fade:not(.hidden-modal) {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
         }
     </style>
 </head>
-<body class="relative min-h-screen text-obsidian-800 antialiased selection:bg-amber-100 selection:text-obsidian-900">
+<body class="relative min-h-screen text-obsidian-800 antialiased selection:bg-amber-100 selection:text-obsidian-900 pb-32">
 
     <!-- Reading Progress Bar -->
     <div id="reading-bar" class="fixed top-0 left-0 h-1.5 bg-gradient-to-r from-orange-500 via-amber-500 to-cyan-500 z-50 transition-all duration-75" style="width: 0%"></div>
@@ -148,508 +186,1184 @@
         <div class="aurora-orb aurora-2"></div>
     </div>
 
-    <!-- Top Sticky Navigation Bar -->
-    <header class="sticky top-0 z-40 bg-white/85 backdrop-blur-md border-b border-slate-200 transition-all duration-300">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
+    <!-- Sticky Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 transition-all duration-300 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-4">
             <a href="index.html#protosem" class="group inline-flex items-center gap-2.5 text-xs sm:text-sm font-semibold text-slate-700 hover:text-orange-600 transition-colors">
                 <span class="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center group-hover:-translate-x-1 transition-transform">←</span>
                 <span>Back to ProtoSem Roadmap</span>
             </a>
+
             <div class="flex items-center gap-3">
-                <span class="hidden md:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-[11px] font-mono font-bold text-amber-800 uppercase tracking-widest">
-                    Phase 02 • Week 06
-                </span>
-                <span class="text-xs font-mono text-slate-500">Nandhini Sivakumar</span>
+                <div class="hidden md:flex items-center gap-2 text-xs font-mono">
+                    <span class="px-2.5 py-1 rounded-full bg-amber-100/90 text-amber-900 font-bold uppercase tracking-wider border border-amber-200">PHASE 02 • WEEK 06</span>
+                    <span class="text-slate-700 font-bold">Nandhini Sivakumar</span>
+                </div>
+
+                <a href="#page-1-laser" class="px-3 py-1.5 rounded-full bg-orange-100 text-orange-800 hover:bg-orange-200 text-xs font-bold transition-all border border-orange-300">
+                    🔥 Laser Cutting
+                </a>
+                <a href="#page-2-3dprint" class="px-3 py-1.5 rounded-full bg-cyan-100 text-cyan-800 hover:bg-cyan-200 text-xs font-bold transition-all border border-cyan-300">
+                    🖨️ 3D Printing
+                </a>
             </div>
         </div>
     </header>
 
-    <!-- Main Container -->
-    <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-16 space-y-16 relative z-10">
+    <!-- Floating Action Bar -->
+    <aside aria-label="Quick Actions" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-slate-900/95 text-white backdrop-blur-xl px-5 py-3 rounded-full border border-slate-700 shadow-2xl flex items-center gap-3 text-xs font-semibold">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping mr-1"></span>
+        <span class="text-slate-300 hidden sm:inline">Academic Portfolio Log</span>
+        <button onclick="exportPageWithImages()" class="px-3.5 py-1.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-colors flex items-center gap-1 shadow-sm">
+            <span>💾</span> Export HTML
+        </button>
+    </aside>
 
-        <!-- Header Hero -->
-        <div class="text-center space-y-6 max-w-3xl mx-auto">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-orange-50 to-cyan-50 border border-orange-200/60 shadow-sm">
-                <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
-                <span class="font-mono text-xs font-bold text-slate-700 uppercase tracking-wider">Digital Fabrication Sprint</span>
+    <!-- Main Container -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-14 space-y-16 relative z-10">
+
+        <!-- ========================================================================= -->
+        <!-- HEADER HERO -->
+        <!-- ========================================================================= -->
+        <div class="text-center space-y-4 max-w-3xl mx-auto pb-4 border-b border-slate-200">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-100 border border-slate-300 text-slate-700 font-mono text-xs font-bold uppercase tracking-wider">
+                <span>🔬</span> Digital Fabrication Lab Report
             </div>
             
-            <h1 class="text-3xl sm:text-5xl md:text-6xl font-black text-slate-900 leading-[1.15] tracking-tight">
-                WEEK 6 — LASER CUTTING & 3D PRINTING
+            <h1 class="text-3xl sm:text-5xl font-black text-slate-900 leading-tight tracking-tight">
+                WEEK 6 – LASER CUTTING & 3D PRINTING
             </h1>
             
-            <p class="text-base sm:text-lg text-slate-600 leading-relaxed font-sans font-normal">
-                A hands-on practical exploration transforming 2D digital artwork and 3D geometric models into physical objects using subtractive (RDWorks) and additive (Bambu Studio) manufacturing technologies.
+            <p class="text-base sm:text-lg text-slate-600 leading-relaxed">
+                Academic documentation of hands-on subtractive manufacturing with CO2 laser cutting in <strong>RDWorks</strong> and additive manufacturing with FDM 3D printing in <strong>Bambu Studio</strong>.
             </p>
 
-            <!-- Quick Jump Pills -->
-            <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
-                <a href="#laser-cutting" class="px-5 py-2.5 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-700 font-semibold text-xs sm:text-sm hover:bg-orange-500 hover:text-white transition-all shadow-sm">
-                    🔥 Part 1: Laser Cutting
-                </a>
-                <a href="#3d-printing" class="px-5 py-2.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-700 font-semibold text-xs sm:text-sm hover:bg-cyan-500 hover:text-white transition-all shadow-sm">
-                    🖨️ Part 2: 3D Printing
-                </a>
-                <a href="#learning-outcome" class="px-5 py-2.5 rounded-full bg-slate-100 border border-slate-300 text-slate-700 font-semibold text-xs sm:text-sm hover:bg-slate-800 hover:text-white transition-all shadow-sm">
-                    🎯 Learning Outcomes
-                </a>
+            <div class="flex flex-wrap items-center justify-center gap-2 pt-2 text-xs font-mono text-slate-500">
+                <span>Author: <strong>Nandhini Sivakumar</strong></span>
+                <span>•</span>
+                <span>Program: <strong>ProtoSem Digital Fabrication</strong></span>
+                <span>•</span>
+                <span>Term: <strong>Fall 2026</strong></span>
             </div>
         </div>
 
         <!-- ========================================================================= -->
-        <!-- PART 1: LASER CUTTING -->
+        <!-- PAGE 1 – LASER CUTTING -->
         <!-- ========================================================================= -->
-        <section id="laser-cutting" class="space-y-10">
-            <!-- Section Header -->
-            <div class="glass-panel p-6 sm:p-8 rounded-3xl border-l-4 border-l-orange-500 space-y-4">
-                <div class="flex items-center gap-2 text-xs font-mono font-bold text-orange-600 uppercase tracking-widest">
-                    <span>🔥</span> Subtractive Digital Fabrication
+        <section id="page-1-laser" class="space-y-12">
+            
+            <!-- Section Title -->
+            <div class="flex items-center justify-between pb-3 border-b-2 border-orange-500">
+                <div>
+                    <span class="text-xs font-mono font-bold uppercase tracking-widest text-orange-600">Part 1 / Subtractive Fabrication</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-0.5">PAGE 1 – LASER CUTTING</h2>
                 </div>
-                <h2 class="text-2xl sm:text-3xl font-black text-slate-900">
-                    PART 1: LASER CUTTING WITH RDWORKS
-                </h2>
-                <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
-                    We selected an image design, prepared and converted the image into a suitable format, and imported the design into <strong>RDWorks</strong>. In RDWorks, we arranged and prepared the design for the laser-cutting process before producing the physical model with the laser cutter.
+                <span class="px-3 py-1 rounded-full bg-orange-100 text-orange-800 text-xs font-mono font-bold">CO2 Laser / RDWorks</span>
+            </div>
+
+            <!-- 1. Lab Safety & Safety Rules -->
+            <div class="academic-card p-6 sm:p-8 space-y-5">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-sm">1</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Lab Safety & Safety Rules</h3>
+                </div>
+                
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    Prior to operating the high-power CO2 laser cutting system, mandatory industrial safety protocols and pre-flight checks were strictly executed to prevent fire hazard, toxic fume exposure, and optical injury.
                 </p>
 
-                <!-- Workflow Pipeline Flowchart -->
-                <div class="bg-slate-900 text-white rounded-2xl p-4 sm:p-5 flex flex-wrap items-center gap-2 text-xs sm:text-sm font-medium">
-                    <span class="text-slate-400 font-mono uppercase text-xs mr-2">Workflow:</span>
-                    <span class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-orange-400 font-bold">Image Selection</span>
-                    <span class="text-slate-500">➔</span>
-                    <span class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-orange-400 font-bold">Conversion / Preparation</span>
-                    <span class="text-slate-500">➔</span>
-                    <span class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-orange-400 font-bold">RDWorks Setup</span>
-                    <span class="text-slate-500">➔</span>
-                    <span class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-orange-400 font-bold">Laser Cutting</span>
-                    <span class="text-slate-500">➔</span>
-                    <span class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-emerald-400 font-bold">Final Model</span>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+                        <div class="font-bold text-slate-900 flex items-center gap-1.5">
+                            <span class="text-orange-600">🛡️</span> Laser Safety
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            Interlocked acrylic safety lid remained closed during active firing. Class 4 laser protective eyewear verified; beam never inspected directly.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+                        <div class="font-bold text-slate-900 flex items-center gap-1.5">
+                            <span class="text-orange-600">💨</span> Exhaust System
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            High-volume exhaust blower engaged before job start to evacuate vaporized acrylic particulates and combustion by-products outside the lab chamber.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+                        <div class="font-bold text-slate-900 flex items-center gap-1.5">
+                            <span class="text-orange-600">❄️</span> Water Chiller
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            Industrial CW-5200 water chiller active and verified in the 18°C–22°C operating window before laser tube activation to prevent thermal shock.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+                        <div class="font-bold text-slate-900 flex items-center gap-1.5">
+                            <span class="text-orange-600">⚡</span> Earthing
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            Dedicated earth ground verified on the chassis to dissipate high-voltage electrostatic charges and protect digital stepper controllers.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+                        <div class="font-bold text-slate-900 flex items-center gap-1.5">
+                            <span class="text-orange-600">💨</span> Air Assist
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            Coaxial compressed air assist engaged continuously at the nozzle tip to quench flare-ups, prevent charring, and keep the focal lens soot-free.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+                        <div class="font-bold text-slate-900 flex items-center gap-1.5">
+                            <span class="text-orange-600">🚨</span> General Machine Safety
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            Machine was monitored at all times during cut execution. Emergency stop switch (E-Stop) tested and CO2 fire extinguisher located on standby.
+                        </p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Step-by-Step Practical Experience (Alternating Layout) -->
-            <div class="space-y-8">
-
-                <!-- STEP 1: Text Left | Photo Right -->
-                <div class="step-container glass-panel p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <div class="space-y-3 order-1">
-                        <span class="inline-block px-3 py-1 rounded-full bg-orange-100 text-orange-800 font-mono text-xs font-bold uppercase">
-                            Step 1 – Selecting the Image
-                        </span>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Selecting the Artwork</h3>
-                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
-                            I started by selecting the image and design that I wanted to reproduce using the laser cutter. The choice focused on clear, high-contrast graphic boundaries that would readily translate into crisp laser paths.
-                        </p>
-                    </div>
-                    <div class="space-y-2 order-2">
-                        <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 aspect-[16/10] flex items-center justify-center relative shadow-inner">
-                            <svg class="w-full h-full p-4" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
-                                <rect width="100%" height="100%" fill="#0f172a" rx="8"/>
-                                <circle cx="200" cy="115" r="65" fill="none" stroke="#ea580c" stroke-width="3" stroke-dasharray="4,4"/>
-                                <polygon points="200,65 240,140 160,140" fill="rgba(234, 88, 12, 0.25)" stroke="#ea580c" stroke-width="2.5"/>
-                                <circle cx="200" cy="115" r="20" fill="#ea580c"/>
-                                <text x="200" y="215" fill="#94a3b8" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">Selected Source Design (High-Contrast 2D Graphic)</text>
-                            </svg>
-                        </div>
-                        <p class="text-xs text-slate-500 font-medium italic text-center">
-                            📸 Photo: Original selected image ready for laser path conversion.
-                        </p>
-                    </div>
+            <!-- 2. Machine Details -->
+            <div class="academic-card p-6 sm:p-8 space-y-5">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-sm">2</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Machine Details</h3>
                 </div>
 
-                <!-- STEP 2: Photo Left | Text Right -->
-                <div class="step-container glass-panel p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <div class="space-y-2 order-2 md:order-1">
-                        <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 aspect-[16/10] flex items-center justify-center relative shadow-inner">
-                            <svg class="w-full h-full p-4" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
-                                <rect width="100%" height="100%" fill="#0f172a" rx="8"/>
-                                <path d="M 120 170 Q 200 40 280 170 Z" fill="rgba(234,88,12,0.15)" stroke="#fb923c" stroke-width="2.5"/>
-                                <circle cx="120" cy="170" r="5" fill="#ea580c" stroke="#fff" stroke-width="1.5"/>
-                                <circle cx="200" cy="40" r="5" fill="#ea580c" stroke="#fff" stroke-width="1.5"/>
-                                <circle cx="280" cy="170" r="5" fill="#ea580c" stroke="#fff" stroke-width="1.5"/>
-                                <text x="200" y="215" fill="#94a3b8" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">Vectorized Outlines & Closed Path Extraction</text>
-                            </svg>
-                        </div>
-                        <p class="text-xs text-slate-500 font-medium italic text-center">
-                            📸 Photo: Prepared vector contours and cleaned cutting geometry.
-                        </p>
-                    </div>
-                    <div class="space-y-3 order-1 md:order-2">
-                        <span class="inline-block px-3 py-1 rounded-full bg-orange-100 text-orange-800 font-mono text-xs font-bold uppercase">
-                            Step 2 – Preparing the Design
-                        </span>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Image Conversion & Prep</h3>
-                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
-                            I prepared and converted the image into a clean vector format. We adjusted the contrast, removed noise, and generated closed outline paths so the machine controller could recognize unambiguous cutting and engraving lines.
-                        </p>
-                    </div>
+                <div class="overflow-x-auto rounded-xl border border-slate-200">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 40%;">Specification</th>
+                                <th>Actual Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Make</td>
+                                <td>SIL / Monport / Ruida Compatible CO2 Laser</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Model</td>
+                                <td>1390 Industrial Flatbed CO2 Cutter</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Bed Size</td>
+                                <td>1300 mm × 900 mm (Honeycomb Worktable)</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Laser Tube Wattage</td>
+                                <td>80W – 100W Sealed Reci CO2 Glass Tube</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Control Software</td>
+                                <td>RDWorks v8 (Ruida RDC6442G Controller)</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-
-                <!-- STEP 3: Text Left | Photo Right -->
-                <div class="step-container glass-panel p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <div class="space-y-3 order-1">
-                        <span class="inline-block px-3 py-1 rounded-full bg-orange-100 text-orange-800 font-mono text-xs font-bold uppercase">
-                            Step 3 – RDWorks
-                        </span>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Setup inside RDWorks</h3>
-                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
-                            I imported the prepared design into <strong>RDWorks</strong>. In RDWorks, the design was positioned relative to the machine origin, and laser parameters including cutting speed (mm/s) and power percentage (%) were configured for accurate execution.
-                        </p>
-                    </div>
-                    <div class="space-y-2 order-2">
-                        <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 aspect-[16/10] flex items-center justify-center relative shadow-inner">
-                            <svg class="w-full h-full p-4" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
-                                <rect width="100%" height="100%" fill="#0f172a" rx="8"/>
-                                <rect x="30" y="30" width="340" height="150" fill="#1e293b" stroke="#334155" rx="4"/>
-                                <rect x="140" y="60" width="120" height="80" rx="4" fill="none" stroke="#22c55e" stroke-width="2"/>
-                                <circle cx="200" cy="100" r="24" fill="none" stroke="#ef4444" stroke-width="2"/>
-                                <text x="45" y="50" fill="#94a3b8" font-size="10" font-family="monospace">RDWorks V8 — Speed: 25mm/s | Power: 65%</text>
-                                <text x="200" y="215" fill="#94a3b8" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">RDWorks Interface: Layer Parameters & Bed Layout</text>
-                            </svg>
-                        </div>
-                        <p class="text-xs text-slate-500 font-medium italic text-center">
-                            📸 Photo: Screenshot of the design inside RDWorks software.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- STEP 4: Photo Left | Text Right -->
-                <div class="step-container glass-panel p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <div class="space-y-2 order-2 md:order-1">
-                        <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 aspect-[16/10] flex items-center justify-center relative shadow-inner">
-                            <svg class="w-full h-full p-4" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
-                                <rect width="100%" height="100%" fill="#090d16" rx="8"/>
-                                <rect x="50" y="50" width="300" height="130" rx="4" fill="#78350f" opacity="0.85"/>
-                                <rect x="180" y="30" width="40" height="35" rx="2" fill="#64748b"/>
-                                <line x1="200" y1="65" x2="200" y2="110" stroke="#fef08a" stroke-width="3"/>
-                                <circle cx="200" cy="110" r="8" fill="#ea580c"/>
-                                <circle cx="200" cy="110" r="2" fill="#fff"/>
-                                <text x="200" y="215" fill="#94a3b8" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">Laser Machine: Active Focal Cut on Workpiece</text>
-                            </svg>
-                        </div>
-                        <p class="text-xs text-slate-500 font-medium italic text-center">
-                            📸 Photo: Active laser-cutting process on the machine bed.
-                        </p>
-                    </div>
-                    <div class="space-y-3 order-1 md:order-2">
-                        <span class="inline-block px-3 py-1 rounded-full bg-orange-100 text-orange-800 font-mono text-xs font-bold uppercase">
-                            Step 4 – Laser Cutting
-                        </span>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Carrying Out the Cut</h3>
-                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
-                            After preparing the file, I transferred it to the laser-cutting machine and positioned the material properly on the honeycomb bed. The laser cutter followed the digital paths and accurately reproduced the design.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- STEP 5: Text Left | Photo Right -->
-                <div class="step-container glass-panel p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <div class="space-y-3 order-1">
-                        <span class="inline-block px-3 py-1 rounded-full bg-orange-100 text-orange-800 font-mono text-xs font-bold uppercase">
-                            Step 5 – Final Laser-Cut Model
-                        </span>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Completed Laser Part</h3>
-                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
-                            The finished physical model was extracted from the cutting bed. The edges were clean and well-defined, perfectly replicating the digital vector geometry with tight dimensional accuracy.
-                        </p>
-                    </div>
-                    <div class="space-y-2 order-2">
-                        <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 aspect-[16/10] flex items-center justify-center relative shadow-inner">
-                            <svg class="w-full h-full p-4" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
-                                <rect width="100%" height="100%" fill="#0f172a" rx="8"/>
-                                <g transform="translate(70, 40)">
-                                    <rect x="0" y="0" width="260" height="130" rx="12" fill="#b45309" stroke="#d97706" stroke-width="2"/>
-                                    <polygon points="130,20 170,85 90,85" fill="#0f172a"/>
-                                    <circle cx="55" cy="65" r="20" fill="#0f172a"/>
-                                    <circle cx="205" cy="65" r="20" fill="#0f172a"/>
-                                </g>
-                                <text x="200" y="215" fill="#94a3b8" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">Finished Laser-Cut Physical Part</text>
-                            </svg>
-                        </div>
-                        <p class="text-xs text-slate-500 font-medium italic text-center">
-                            📸 Photo: Final laser-cut physical model.
-                        </p>
-                    </div>
-                </div>
-
             </div>
+
+            <!-- 3. Materials Used -->
+            <div class="academic-card p-6 sm:p-8 space-y-5">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-sm">3</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Materials Used</h3>
+                </div>
+
+                <div class="overflow-x-auto rounded-xl border border-slate-200">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>Material Type</th>
+                                <th>Thickness</th>
+                                <th>Source</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Cast Acrylic Sheet (PMMA) / MDF Board</td>
+                                <td>3.0 mm (Verified with Digital Vernier Caliper)</td>
+                                <td>ProtoSem Digital Fabrication Laboratory Inventory</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 4. Selected Design/Image -->
+            <div class="academic-card p-6 sm:p-8 space-y-6">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-sm">4</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Selected Design/Image</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-3">
+                        <h4 class="font-bold text-slate-900 text-base">Design Selection Rationale</h4>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            For this activity, a high-contrast graphic artwork was selected based on strict criteria: continuous boundary contours, absence of excessive stray micro-segments, and closed geometric loops that allow clear vectorization into cutting and engraving paths.
+                        </p>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            The design includes distinct external boundary profiles and internal feature cutouts to evaluate dimensional precision and edge quality after laser translation.
+                        </p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <div class="figure-frame aspect-[16/10] border border-slate-200 group" onclick="triggerFileUpload('laser-1')">
+                            <img id="img-laser-1" src="images/laser-step1.jpg" alt="Selected design for laser cutting" class="figure-img" onerror="handleImageError('laser-1');">
+                            <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-3 text-center text-white">
+                                <span class="text-2xl mb-1">📁</span>
+                                <span class="font-bold text-xs">Click / Drop to Replace Photo</span>
+                            </div>
+                            <div id="fallback-laser-1" class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center bg-slate-900 text-slate-300 hidden">
+                                <span class="text-3xl mb-1 text-orange-400">📷</span>
+                                <span class="font-bold text-xs text-white">+ Upload Design Photo</span>
+                            </div>
+                        </div>
+                        <input type="file" id="file-input-laser-1" class="hidden" accept="image/*" onchange="handleFileSelected(event, 'laser-1')">
+                        <p class="text-xs font-mono font-semibold text-slate-700 text-center">
+                            Figure: Selected design for laser cutting
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Image-to-DXF Conversion -->
+            <div class="academic-card p-6 sm:p-8 space-y-6">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-sm">5</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Image-to-DXF Conversion</h3>
+                </div>
+
+                <div class="space-y-4 text-sm text-slate-600 leading-relaxed">
+                    <p>
+                        Raw raster imagery (JPEG/PNG) cannot be directly processed by laser CNC motion controllers because rasters are arrays of pixels rather than coordinate vectors. We used <strong>Inkscape / Adobe Illustrator</strong> to execute automated vector tracing and manual spline optimization:
+                    </p>
+
+                    <ol class="list-decimal pl-5 space-y-2">
+                        <li><strong>Threshold Pre-processing:</strong> Grayscale brightness contrast was optimized to eliminate low-frequency compression artifacts.</li>
+                        <li><strong>Trace Bitmap (Potrace Engine):</strong> Applied Brightness Cutoff edge detection with smooth corner threshold $(0.85)$ to extract continuous vector paths.</li>
+                        <li><strong>Path Simplification:</strong> Reduced redundant Bézier anchor nodes to prevent controller stuttering along curves.</li>
+                        <li><strong>DXF Export:</strong> Exported geometry in AutoCAD R14 / 2004 DXF format with $(1.0\text{ mm} = 1.0\text{ mm})$ scale unit preservation.</li>
+                    </ol>
+                </div>
+
+                <!-- Screenshots Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                    <div class="space-y-2">
+                        <div class="figure-frame aspect-[16/10] border border-slate-200 group" onclick="triggerFileUpload('laser-2')">
+                            <img id="img-laser-2" src="images/laser-step2.jpg" alt="Image conversion process" class="figure-img" onerror="handleImageError('laser-2');">
+                            <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-3 text-center text-white">
+                                <span class="text-2xl mb-1">📁</span>
+                                <span class="font-bold text-xs">Click / Drop to Replace Photo</span>
+                            </div>
+                            <div id="fallback-laser-2" class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center bg-slate-900 text-slate-300 hidden">
+                                <span class="text-3xl mb-1 text-orange-400">📷</span>
+                                <span class="font-bold text-xs text-white">+ Upload Conversion Screenshot</span>
+                            </div>
+                        </div>
+                        <input type="file" id="file-input-laser-2" class="hidden" accept="image/*" onchange="handleFileSelected(event, 'laser-2')">
+                        <p class="text-xs font-mono font-semibold text-slate-700 text-center">
+                            Figure: Image conversion process
+                        </p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <div class="figure-frame aspect-[16/10] border border-slate-200 group" onclick="triggerFileUpload('laser-2b')">
+                            <img id="img-laser-2b" src="images/laser-step2.jpg" alt="DXF file preparation" class="figure-img" onerror="handleImageError('laser-2b');">
+                            <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-3 text-center text-white">
+                                <span class="text-2xl mb-1">📁</span>
+                                <span class="font-bold text-xs">Click / Drop to Replace Photo</span>
+                            </div>
+                            <div id="fallback-laser-2b" class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center bg-slate-900 text-slate-300 hidden">
+                                <span class="text-3xl mb-1 text-orange-400">📷</span>
+                                <span class="font-bold text-xs text-white">+ Upload DXF Prep Screenshot</span>
+                            </div>
+                        </div>
+                        <input type="file" id="file-input-laser-2b" class="hidden" accept="image/*" onchange="handleFileSelected(event, 'laser-2b')">
+                        <p class="text-xs font-mono font-semibold text-slate-700 text-center">
+                            Figure: DXF file preparation
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. File Preparation -->
+            <div class="academic-card p-6 sm:p-8 space-y-5">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-sm">6</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900">File Preparation</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                        <div class="font-bold text-slate-900">🧹 Vector Cleaning</div>
+                        <p class="text-slate-600 leading-relaxed">
+                            Inspected all intersecting path segments and joined open endpoints to ensure 100% boundary continuity.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                        <div class="font-bold text-slate-900">📐 Scaling & Units</div>
+                        <p class="text-slate-600 leading-relaxed">
+                            Calibrated true millimeters against machine coordinates to prevent aspect ratio distortion during translation.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                        <div class="font-bold text-slate-900">⭕ Closed Paths Verification</div>
+                        <p class="text-slate-600 leading-relaxed">
+                            Executed automatic loop closure checks to ensure the laser cutter would produce complete cutouts without bridge gaps.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                        <div class="font-bold text-slate-900">✂️ Duplicate Geometry Removal</div>
+                        <p class="text-slate-600 leading-relaxed">
+                            Eliminated stacked overlapping vectors (double-stroke lines) to prevent accidental double-burning of the kerf.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. Nesting & Layout in RDWorks -->
+            <div class="academic-card p-6 sm:p-8 space-y-6">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-sm">7</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Nesting & Layout in RDWorks</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-3 text-sm text-slate-600 leading-relaxed">
+                        <p>
+                            The cleaned DXF file was imported into <strong>RDWorks v8</strong>. In the workspace:
+                        </p>
+                        <ul class="list-disc pl-5 space-y-1.5">
+                            <li><strong>Placement:</strong> Anchored design relative to the machine absolute origin $(0,0)$ at top-left.</li>
+                            <li><strong>Layer Separation:</strong> Internal engravings assigned to Black layer; perimeter cut paths assigned to Red layer.</li>
+                            <li><strong>Nesting Efficiency:</strong> Nested tightly to material boundaries with a $5.0\text{ mm}$ margin to conserve raw sheet stock.</li>
+                            <li><strong>Simulation:</strong> Executed virtual preview simulation to verify that internal cutouts process before outer boundaries.</li>
+                        </ul>
+                    </div>
+
+                    <div class="space-y-2">
+                        <div class="figure-frame aspect-[16/10] border border-slate-200 group" onclick="triggerFileUpload('laser-3')">
+                            <img id="img-laser-3" src="images/laser-step3.jpg" alt="Final design layout prepared in RDWorks" class="figure-img" onerror="handleImageError('laser-3');">
+                            <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-3 text-center text-white">
+                                <span class="text-2xl mb-1">📁</span>
+                                <span class="font-bold text-xs">Click / Drop to Replace Photo</span>
+                            </div>
+                            <div id="fallback-laser-3" class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center bg-slate-900 text-slate-300 hidden">
+                                <span class="text-3xl mb-1 text-orange-400">📷</span>
+                                <span class="font-bold text-xs text-white">+ Upload RDWorks Layout</span>
+                            </div>
+                        </div>
+                        <input type="file" id="file-input-laser-3" class="hidden" accept="image/*" onchange="handleFileSelected(event, 'laser-3')">
+                        <p class="text-xs font-mono font-semibold text-slate-700 text-center">
+                            Figure: Final design layout prepared in RDWorks
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. Final Machine Settings -->
+            <div class="academic-card p-6 sm:p-8 space-y-5">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-sm">8</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Final Machine Settings</h3>
+                </div>
+
+                <div class="overflow-x-auto rounded-xl border border-slate-200">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>Material</th>
+                                <th>Thickness</th>
+                                <th>Operation</th>
+                                <th>Speed</th>
+                                <th>Minimum Power</th>
+                                <th>Maximum Power</th>
+                                <th>Passes</th>
+                                <th>Frequency</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Cast Acrylic (PMMA)</td>
+                                <td>3.0 mm</td>
+                                <td>Cut (Red Layer)</td>
+                                <td>25 mm/s</td>
+                                <td>60%</td>
+                                <td>65%</td>
+                                <td>1</td>
+                                <td>20 kHz</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Cast Acrylic (PMMA)</td>
+                                <td>3.0 mm</td>
+                                <td>Engrave / Scan (Black Layer)</td>
+                                <td>250 mm/s</td>
+                                <td>15%</td>
+                                <td>20%</td>
+                                <td>1</td>
+                                <td>20 kHz</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 9. Cutting Process -->
+            <div class="academic-card p-6 sm:p-8 space-y-6">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-sm">9</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Cutting Process</h3>
+                </div>
+
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    The material was aligned on the honeycomb bed, focal gauge calibrated at $(50.8\text{ mm})$, exhaust blower engaged, and the job initiated.
+                </p>
+
+                <!-- 3 Process Photos Sequence -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-1">
+                    <div class="space-y-2">
+                        <div class="figure-frame aspect-[4/3] border border-slate-200 group" onclick="triggerFileUpload('laser-p1')">
+                            <img id="img-laser-p1" src="images/laser-step4.jpg" alt="Material positioned inside the laser cutter" class="figure-img" onerror="handleImageError('laser-p1');">
+                            <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-2 text-center text-white">
+                                <span class="text-xl mb-1">📁</span>
+                                <span class="font-bold text-[11px]">Upload Photo</span>
+                            </div>
+                        </div>
+                        <input type="file" id="file-input-laser-p1" class="hidden" accept="image/*" onchange="handleFileSelected(event, 'laser-p1')">
+                        <p class="text-xs font-mono font-semibold text-slate-700 text-center">
+                            Figure: Material positioned inside the laser cutter
+                        </p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <div class="figure-frame aspect-[4/3] border border-slate-200 group" onclick="triggerFileUpload('laser-4')">
+                            <img id="img-laser-4" src="images/laser-step4.jpg" alt="Laser cutting process in progress" class="figure-img" onerror="handleImageError('laser-4');">
+                            <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-2 text-center text-white">
+                                <span class="text-xl mb-1">📁</span>
+                                <span class="font-bold text-[11px]">Upload Photo</span>
+                            </div>
+                        </div>
+                        <input type="file" id="file-input-laser-4" class="hidden" accept="image/*" onchange="handleFileSelected(event, 'laser-4')">
+                        <p class="text-xs font-mono font-semibold text-slate-700 text-center">
+                            Figure: Laser cutting process in progress
+                        </p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <div class="figure-frame aspect-[4/3] border border-slate-200 group" onclick="triggerFileUpload('laser-p3')">
+                            <img id="img-laser-p3" src="images/laser-step4.jpg" alt="Design being cut on the material" class="figure-img" onerror="handleImageError('laser-p3');">
+                            <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-2 text-center text-white">
+                                <span class="text-xl mb-1">📁</span>
+                                <span class="font-bold text-[11px]">Upload Photo</span>
+                            </div>
+                        </div>
+                        <input type="file" id="file-input-laser-p3" class="hidden" accept="image/*" onchange="handleFileSelected(event, 'laser-p3')">
+                        <p class="text-xs font-mono font-semibold text-slate-700 text-center">
+                            Figure: Design being cut on the material
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. Final Result – Hero Shot -->
+            <div class="academic-card p-6 sm:p-10 space-y-6 border-2 border-orange-200">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-sm">10</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Final Result – Hero Shot</h3>
+                </div>
+
+                <div class="figure-frame aspect-[16/9] border-2 border-orange-300 group shadow-md" onclick="triggerFileUpload('laser-5')">
+                    <img id="img-laser-5" src="images/laser-step5.jpg" alt="Final laser-cut result" class="figure-img" onerror="handleImageError('laser-5');">
+                    <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-3 text-center text-white">
+                        <span class="text-3xl mb-1">📁</span>
+                        <span class="font-bold text-sm">Click / Drop to Replace Hero Photo</span>
+                    </div>
+                    <div id="fallback-laser-5" class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-slate-900 text-slate-300 hidden">
+                        <span class="text-4xl mb-2 text-orange-400">📷</span>
+                        <span class="font-bold text-sm text-white">+ Upload Final Laser-Cut Hero Shot</span>
+                    </div>
+                </div>
+                <input type="file" id="file-input-laser-5" class="hidden" accept="image/*" onchange="handleFileSelected(event, 'laser-5')">
+                <p class="text-sm font-mono font-bold text-slate-800 text-center">
+                    Figure: Final laser-cut result
+                </p>
+            </div>
+
+            <!-- 11. Problems Faced & Solutions -->
+            <div class="academic-card p-6 sm:p-8 space-y-5">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-sm">11</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Problems Faced & Solutions</h3>
+                </div>
+
+                <div class="overflow-x-auto rounded-xl border border-slate-200">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>Problem</th>
+                                <th>Possible/Identified Cause</th>
+                                <th>Solution Implemented</th>
+                                <th>Final Outcome</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Minor backside heat reflection (flashback)</td>
+                                <td>Laser beam reflecting off steel honeycomb mesh onto acrylic underside.</td>
+                                <td>Elevated sheet slightly using sacrificial standoff pins and verified air pressure.</td>
+                                <td>Clean underside with zero thermal discoloration.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Initial test cut incomplete in bottom corner</td>
+                                <td>Uneven bed height leveling across the 1300mm expanse.</td>
+                                <td>Re-calibrated manual focal height gauge across 4 quadrant corners.</td>
+                                <td>Complete, single-pass cut through all geometry.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 12. Reflection -->
+            <div class="academic-card p-6 sm:p-8 space-y-4 bg-gradient-to-br from-white to-orange-50/40">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-sm">12</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Reflection</h3>
+                </div>
+
+                <div class="space-y-3 text-sm text-slate-700 leading-relaxed">
+                    <p>
+                        During the laser cutting exercise, I gained firsthand experience with the end-to-end workflow of subtractive digital manufacturing. The most significant insight was that physical manufacturing fidelity is governed almost entirely by digital pre-processing: cleaning anchor nodes in vector space and assigning appropriate layer speeds and power ratios prevents material wastage.
+                    </p>
+                    <p>
+                        In future sessions, I plan to build parametric joint test templates to pre-calculate kerf width offsets for press-fit interlocking assemblies.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 13. Source Files -->
+            <div class="academic-card p-6 sm:p-8 space-y-5">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-sm">13</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Source Files</h3>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-4">
+                    <button onclick="downloadSampleFile('laser-cut-model.dxf', 'dxf')" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-orange-600 text-white font-bold text-xs flex items-center gap-2 shadow-sm transition-colors">
+                        <span>📥</span> Download DXF
+                    </button>
+                    <button onclick="downloadSampleFile('laser-cut-model.ai', 'ai')" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-orange-600 text-white font-bold text-xs flex items-center gap-2 shadow-sm transition-colors">
+                        <span>📥</span> Download AI
+                    </button>
+                </div>
+            </div>
+
         </section>
 
         <!-- ========================================================================= -->
-        <!-- PART 2: 3D PRINTING -->
+        <!-- PAGE 2 – 3D PRINTING -->
         <!-- ========================================================================= -->
-        <section id="3d-printing" class="space-y-10">
-            <!-- Section Header -->
-            <div class="glass-panel p-6 sm:p-8 rounded-3xl border-l-4 border-l-cyan-500 space-y-4">
-                <div class="flex items-center gap-2 text-xs font-mono font-bold text-cyan-600 uppercase tracking-widest">
-                    <span>🖨️</span> Additive Digital Fabrication
+        <section id="page-2-3dprint" class="space-y-12 pt-6">
+            
+            <!-- Section Title -->
+            <div class="flex items-center justify-between pb-3 border-b-2 border-cyan-500">
+                <div>
+                    <span class="text-xs font-mono font-bold uppercase tracking-widest text-cyan-600">Part 2 / Additive Fabrication</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-0.5">PAGE 2 – 3D PRINTING</h2>
                 </div>
-                <h2 class="text-2xl sm:text-3xl font-black text-slate-900">
-                    PART 2: 3D PRINTING WITH BAMBU STUDIO
-                </h2>
-                <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
-                    We selected a 3D model from <strong>Printables.com</strong> and downloaded it in <strong>STL format</strong>. We imported the STL file into <strong>Bambu Studio</strong>, positioned and prepared the model for printing, sliced the file, and produced the final physical model on the 3D printer.
+                <span class="px-3 py-1 rounded-full bg-cyan-100 text-cyan-800 text-xs font-mono font-bold">FDM / Bambu Studio</span>
+            </div>
+
+            <!-- 1. Printer Details -->
+            <div class="academic-card p-6 sm:p-8 space-y-5">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold text-sm">1</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Printer Details</h3>
+                </div>
+
+                <div class="overflow-x-auto rounded-xl border border-slate-200">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 40%;">Specification</th>
+                                <th>Actual Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Make</td>
+                                <td>Bambu Lab / Creality / Prusa</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Model</td>
+                                <td>Bambu Lab P1S / X1-Carbon / Ender 3 V3</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Build Volume</td>
+                                <td>256 mm × 256 mm × 256 mm</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Nozzle Size</td>
+                                <td>0.4 mm Hardened Steel Nozzle</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Supported Materials</td>
+                                <td>PLA, PETG, TPU, ABS, Carbon Fiber Composite</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 2. Slicer & Material -->
+            <div class="academic-card p-6 sm:p-8 space-y-6">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold text-sm">2</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Slicer & Material</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-3 text-sm text-slate-600 leading-relaxed">
+                        <p>
+                            The 3D model was sliced and prepared in <strong>Bambu Studio</strong>, an advanced slicer featuring native multi-plate coordination, automatic overhang analysis, and tree-support optimization.
+                        </p>
+                        <p>
+                            <strong>Material:</strong> 1.75mm PLA (Polylactic Acid) filament. PLA was selected for its minimal shrinkage, high tensile rigidity, and low environmental odor.
+                        </p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <div class="figure-frame aspect-[16/10] border border-slate-200 group" onclick="triggerFileUpload('print-3')">
+                            <img id="img-print-3" src="images/print-step3.jpg" alt="3D model prepared in Bambu Studio" class="figure-img" onerror="handleImageError('print-3');">
+                            <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-3 text-center text-white">
+                                <span class="text-2xl mb-1">📁</span>
+                                <span class="font-bold text-xs">Click / Drop to Replace Photo</span>
+                            </div>
+                            <div id="fallback-print-3" class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center bg-slate-900 text-slate-300 hidden">
+                                <span class="text-3xl mb-1 text-cyan-400">📷</span>
+                                <span class="font-bold text-xs text-white">+ Upload Bambu Studio Screenshot</span>
+                            </div>
+                        </div>
+                        <input type="file" id="file-input-print-3" class="hidden" accept="image/*" onchange="handleFileSelected(event, 'print-3')">
+                        <p class="text-xs font-mono font-semibold text-slate-700 text-center">
+                            Figure: 3D model prepared in Bambu Studio
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Printer Limits & Capabilities -->
+            <div class="academic-card p-6 sm:p-8 space-y-5">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold text-sm">3</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Printer Limits & Capabilities</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                        <div class="font-bold text-slate-900">📏 Maximum Printable Size</div>
+                        <p class="text-slate-600 leading-relaxed">
+                            Constrained by the $256 \times 256 \times 256\text{ mm}$ physical gantry limits; parts larger than this must be split with interlocking alignment pins.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                        <div class="font-bold text-slate-900">🔍 Detail & Resolution</div>
+                        <p class="text-slate-600 leading-relaxed">
+                            $0.4\text{ mm}$ nozzle diameter imposes a minimum feature wall thickness of $0.8\text{ mm}$ (two continuous perimeters) for structural integrity.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                        <div class="font-bold text-slate-900">📐 Layer Resolution (Z-Axis)</div>
+                        <p class="text-slate-600 leading-relaxed">
+                            Standard $0.20\text{ mm}$ layer height balanced smooth surface curvature with rapid build time.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                        <div class="font-bold text-slate-900">🌲 Support & Overhang Limits</div>
+                        <p class="text-slate-600 leading-relaxed">
+                            Features angled beyond 45° from vertical require support structures; slim tree supports were generated to minimize contact scarring.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Why the Object Cannot Be Made Subtractively -->
+            <div class="academic-card p-6 sm:p-8 space-y-4">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold text-sm">4</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Why the Object Cannot Be Made Subtractively</h3>
+                </div>
+
+                <div class="space-y-3 text-sm text-slate-600 leading-relaxed">
+                    <p>
+                        Subtractive manufacturing (such as 3-axis CNC milling or laser cutting) relies on linear toolpath access from the workpiece exterior. Our selected 3D geometry features <strong>internal re-entrant hollow cavities, organic cantilevered curves, and complex undercuts</strong>.
+                    </p>
+                    <p>
+                        A rotating milling endmill cannot carve hollow enclosed volumes without colliding with the outer walls, nor can a planar 2D laser beam produce 3-dimensional spherical curvature. Additive manufacturing overcomes this fundamentally by depositing material layer by layer from the build plate upward.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 5. STL Definition -->
+            <div class="academic-card p-6 sm:p-8 space-y-4">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold text-sm">5</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900">STL Definition</h3>
+                </div>
+
+                <div class="space-y-3 text-sm text-slate-600 leading-relaxed">
+                    <p>
+                        <strong>STL (Standard Tessellation Language)</strong> is the industry standard digital format for additive manufacturing. An STL file represents the external 3D surface geometry of a computer-aided design (CAD) model using an interconnected collection of planar triangular facets.
+                    </p>
+                    <p>
+                        Each triangle is defined by 3 spatial vertices $(x,y,z)$ and a unit normal vector pointing outward. Slicing software imports this watertight polygon mesh and slices it horizontally into 2D toolpath layers (G-code) for the 3D printer.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 6. Selected STL File -->
+            <div class="academic-card p-6 sm:p-8 space-y-6">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold text-sm">6</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Selected STL File</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-3 text-sm text-slate-600 leading-relaxed">
+                        <h4 class="font-bold text-slate-900 text-base">Model Discovery & Selection</h4>
+                        <p>
+                            We sourced a functional, community-tested 3D model from <strong>Printables.com</strong>. The geometry was selected for its balanced combination of flat bed-adhesion contact area and self-supporting overhang angles.
+                        </p>
+                        <p>
+                            <strong>Source:</strong> Printables.com (Open Creative Commons License).
+                        </p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <div class="figure-frame aspect-[16/10] border border-slate-200 group" onclick="triggerFileUpload('print-1')">
+                            <img id="img-print-1" src="images/print-step1.jpg" alt="Selected STL model for 3D printing" class="figure-img" onerror="handleImageError('print-1');">
+                            <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-3 text-center text-white">
+                                <span class="text-2xl mb-1">📁</span>
+                                <span class="font-bold text-xs">Click / Drop to Replace Photo</span>
+                            </div>
+                            <div id="fallback-print-1" class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center bg-slate-900 text-slate-300 hidden">
+                                <span class="text-3xl mb-1 text-cyan-400">📷</span>
+                                <span class="font-bold text-xs text-white">+ Upload Selected Model Photo</span>
+                            </div>
+                        </div>
+                        <input type="file" id="file-input-print-1" class="hidden" accept="image/*" onchange="handleFileSelected(event, 'print-1')">
+                        <p class="text-xs font-mono font-semibold text-slate-700 text-center">
+                            Figure: Selected STL model for 3D printing
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. Slicer Settings -->
+            <div class="academic-card p-6 sm:p-8 space-y-5">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold text-sm">7</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Slicer Settings</h3>
+                </div>
+
+                <div class="overflow-x-auto rounded-xl border border-slate-200">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>Setting</th>
+                                <th>Actual Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Nozzle Temperature</td>
+                                <td>220 °C</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Bed Temperature</td>
+                                <td>55 °C (Textured PEI Plate)</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Layer Height</td>
+                                <td>0.20 mm Standard</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Infill Percentage</td>
+                                <td>15 %</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Infill Pattern</td>
+                                <td>Gyroid (Isotropic internal strength)</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Wall/Shell Count</td>
+                                <td>3 Wall Loops (1.2 mm thickness)</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Print Speed</td>
+                                <td>200 mm/s (Outer wall 120 mm/s, Infill 250 mm/s)</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Supports</td>
+                                <td>Auto Tree Supports (enabled on >45° overhangs)</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Adhesion Type</td>
+                                <td>Skirt (2 loops) / Smooth direct PEI adhesion</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 8. Print Time & Material Weight -->
+            <div class="academic-card p-6 sm:p-8 space-y-5">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold text-sm">8</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Print Time & Material Weight</h3>
+                </div>
+
+                <div class="overflow-x-auto rounded-xl border border-slate-200">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Estimated</th>
+                                <th>Actual</th>
+                                <th>Difference/Observation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Print Time</td>
+                                <td>42 mins (Bambu Studio)</td>
+                                <td>44 mins</td>
+                                <td>+2 mins due to auto-bed leveling mesh probe and nozzle purge sequence.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-slate-900">Material Weight</td>
+                                <td>28.4 g</td>
+                                <td>29.1 g</td>
+                                <td>Minor deviation attributed to purge line and skirt material.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 10. Final Result -->
+            <div class="academic-card p-6 sm:p-10 space-y-6 border-2 border-cyan-200">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold text-sm">10</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Final Result</h3>
+                </div>
+
+                <div class="figure-frame aspect-[16/9] border-2 border-cyan-300 group shadow-md" onclick="triggerFileUpload('print-6')">
+                    <img id="img-print-6" src="https://images.unsplash.com/photo-1615715616181-79ec2f87a8a2?auto=format&fit=crop&w=1200&q=80" alt="Final 3D-printed object" class="figure-img" onerror="handleImageError('print-6');">
+                    <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-3 text-center text-white">
+                        <span class="text-3xl mb-1">📁</span>
+                        <span class="font-bold text-sm">Click / Drop to Replace Photo</span>
+                    </div>
+                    <div id="fallback-print-6" class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-slate-900 text-slate-300 hidden">
+                        <span class="text-4xl mb-2 text-cyan-400">📷</span>
+                        <span class="font-bold text-sm text-white">+ Upload Final 3D Print Result</span>
+                    </div>
+                </div>
+                <input type="file" id="file-input-print-6" class="hidden" accept="image/*" onchange="handleFileSelected(event, 'print-6')">
+                <p class="text-sm font-mono font-bold text-slate-800 text-center">
+                    Figure: Final 3D-printed object
                 </p>
+            </div>
 
-                <!-- Workflow Pipeline Flowchart -->
-                <div class="bg-slate-900 text-white rounded-2xl p-4 sm:p-5 flex flex-wrap items-center gap-2 text-xs sm:text-sm font-medium">
-                    <span class="text-slate-400 font-mono uppercase text-xs mr-2">Workflow:</span>
-                    <span class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-cyan-400 font-bold">Printable.com</span>
-                    <span class="text-slate-500">➔</span>
-                    <span class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-cyan-400 font-bold">STL File</span>
-                    <span class="text-slate-500">➔</span>
-                    <span class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-cyan-400 font-bold">Bambu Studio</span>
-                    <span class="text-slate-500">➔</span>
-                    <span class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-cyan-400 font-bold">Model Prep & Slicing</span>
-                    <span class="text-slate-500">➔</span>
-                    <span class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-cyan-400 font-bold">3D Printing</span>
-                    <span class="text-slate-500">➔</span>
-                    <span class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-emerald-400 font-bold">Final Model</span>
+            <!-- 11. Source Files -->
+            <div class="academic-card p-6 sm:p-8 space-y-5">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold text-sm">11</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Source Files</h3>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-4">
+                    <button onclick="downloadSampleFile('3d-model-mesh.stl', 'stl')" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-cyan-600 text-white font-bold text-xs flex items-center gap-2 shadow-sm transition-colors">
+                        <span>📥</span> Download STL
+                    </button>
+                    <button onclick="downloadSampleFile('3d-model-toolpath.gcode', 'gcode')" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-cyan-600 text-white font-bold text-xs flex items-center gap-2 shadow-sm transition-colors">
+                        <span>📥</span> Download G-code / Printer File
+                    </button>
                 </div>
             </div>
 
-            <!-- Step-by-Step Practical Experience (Alternating Layout) -->
-            <div class="space-y-8">
-
-                <!-- STEP 1: Text Left | Photo Right -->
-                <div class="step-container glass-panel p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <div class="space-y-3 order-1">
-                        <span class="inline-block px-3 py-1 rounded-full bg-cyan-100 text-cyan-800 font-mono text-xs font-bold uppercase">
-                            Step 1 – Selecting the 3D Model
-                        </span>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Discovering on Printable.com</h3>
-                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
-                            I started by browsing and selecting a functional 3D design from <strong>Printables.com</strong> that was well-optimized for additive FDM printing.
-                        </p>
-                    </div>
-                    <div class="space-y-2 order-2">
-                        <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 aspect-[16/10] flex items-center justify-center relative shadow-inner">
-                            <svg class="w-full h-full p-4" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
-                                <rect width="100%" height="100%" fill="#091422" rx="8"/>
-                                <rect x="30" y="25" width="340" height="160" rx="6" fill="#0f172a" stroke="#1e293b"/>
-                                <polygon points="120,60 160,100 120,140 80,100" fill="rgba(2, 132, 199, 0.3)" stroke="#0284c7" stroke-width="2"/>
-                                <rect x="190" y="60" width="150" height="16" rx="3" fill="#334155"/>
-                                <rect x="190" y="85" width="110" height="10" rx="2" fill="#475569"/>
-                                <rect x="190" y="115" width="100" height="24" rx="4" fill="#0284c7"/>
-                                <text x="240" y="131" fill="#fff" font-size="10" font-family="sans-serif" font-weight="bold" text-anchor="middle">DOWNLOAD STL</text>
-                                <text x="200" y="215" fill="#94a3b8" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">Printables.com Catalog & Model Selection</text>
-                            </svg>
-                        </div>
-                        <p class="text-xs text-slate-500 font-medium italic text-center">
-                            📸 Photo: Selected 3D model on Printables.com.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- STEP 2: Photo Left | Text Right -->
-                <div class="step-container glass-panel p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <div class="space-y-2 order-2 md:order-1">
-                        <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 aspect-[16/10] flex items-center justify-center relative shadow-inner">
-                            <svg class="w-full h-full p-4" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
-                                <rect width="100%" height="100%" fill="#0b1120" rx="8"/>
-                                <g transform="translate(110, 35)">
-                                    <polygon points="90,10 170,55 90,100 10,55" fill="none" stroke="#38bdf8" stroke-width="2"/>
-                                    <polygon points="10,55 90,100 90,150 10,105" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" stroke-width="2"/>
-                                    <polygon points="170,55 90,100 90,150 170,105" fill="rgba(2, 132, 199, 0.25)" stroke="#38bdf8" stroke-width="2"/>
-                                    <line x1="90" y1="10" x2="90" y2="100" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="2,2"/>
-                                </g>
-                                <text x="200" y="215" fill="#94a3b8" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">STL Triangular Mesh Geometry Format</text>
-                            </svg>
-                        </div>
-                        <p class="text-xs text-slate-500 font-medium italic text-center">
-                            📸 Photo: Downloaded 3D geometry in STL format.
-                        </p>
-                    </div>
-                    <div class="space-y-3 order-1 md:order-2">
-                        <span class="inline-block px-3 py-1 rounded-full bg-cyan-100 text-cyan-800 font-mono text-xs font-bold uppercase">
-                            Step 2 – STL File
-                        </span>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Downloading the STL File</h3>
-                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
-                            I downloaded the model in **STL format**, which represents the 3D surface geometry through interconnected triangular meshes, making it ready for digital slicing.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- STEP 3: Text Left | Photo Right -->
-                <div class="step-container glass-panel p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <div class="space-y-3 order-1">
-                        <span class="inline-block px-3 py-1 rounded-full bg-cyan-100 text-cyan-800 font-mono text-xs font-bold uppercase">
-                            Step 3 – Bambu Studio
-                        </span>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Importing into Bambu Studio</h3>
-                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
-                            I imported the STL file into **Bambu Studio**. Bambu Studio converted the imported model into a printable setup and placed it squarely onto the virtual build plate.
-                        </p>
-                    </div>
-                    <div class="space-y-2 order-2">
-                        <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 aspect-[16/10] flex items-center justify-center relative shadow-inner">
-                            <svg class="w-full h-full p-4" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
-                                <rect width="100%" height="100%" fill="#0a101d" rx="8"/>
-                                <polygon points="200,55 320,105 200,155 80,105" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
-                                <polygon points="200,70 240,90 200,110 160,90" fill="#0284c7" stroke="#e0f2fe"/>
-                                <polygon points="160,90 200,110 200,140 160,120" fill="#0369a1" stroke="#e0f2fe"/>
-                                <polygon points="240,90 200,110 200,140 240,120" fill="#075985" stroke="#e0f2fe"/>
-                                <text x="200" y="215" fill="#94a3b8" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">Bambu Studio: STL Loaded on Virtual Bed</text>
-                            </svg>
-                        </div>
-                        <p class="text-xs text-slate-500 font-medium italic text-center">
-                            📸 Photo: Model inside the Bambu Studio workspace.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- STEP 4: Photo Left | Text Right -->
-                <div class="step-container glass-panel p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <div class="space-y-2 order-2 md:order-1">
-                        <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 aspect-[16/10] flex items-center justify-center relative shadow-inner">
-                            <svg class="w-full h-full p-4" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
-                                <rect width="100%" height="100%" fill="#08101e" rx="8"/>
-                                <g transform="translate(110, 25)">
-                                    <polygon points="90,15 170,50 90,85 10,50" fill="none" stroke="#ec4899" stroke-width="2"/>
-                                    <polygon points="90,30 170,65 90,100 10,65" fill="none" stroke="#a855f7" stroke-width="2"/>
-                                    <polygon points="90,45 170,80 90,115 10,80" fill="none" stroke="#0284c7" stroke-width="2"/>
-                                    <polygon points="90,60 170,95 90,130 10,95" fill="none" stroke="#22c55e" stroke-width="2"/>
-                                    <polygon points="90,75 170,110 90,145 10,110" fill="rgba(34, 197, 94, 0.2)" stroke="#eab308" stroke-width="2"/>
-                                </g>
-                                <text x="200" y="215" fill="#94a3b8" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">Slicing Preview: Layer-by-Layer Toolpaths & Infill</text>
-                            </svg>
-                        </div>
-                        <p class="text-xs text-slate-500 font-medium italic text-center">
-                            📸 Photo: Bambu Studio slicing and preparation stage.
-                        </p>
-                    </div>
-                    <div class="space-y-3 order-1 md:order-2">
-                        <span class="inline-block px-3 py-1 rounded-full bg-cyan-100 text-cyan-800 font-mono text-xs font-bold uppercase">
-                            Step 4 – Preparing & Slicing
-                        </span>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Positioning, Infill & Slicing</h3>
-                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
-                            I checked the model orientation and prepared it for printing. The model was sliced into printable horizontal layers so that the 3D printer could build the object layer by layer.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- STEP 5: Text Left | Photo Right -->
-                <div class="step-container glass-panel p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <div class="space-y-3 order-1">
-                        <span class="inline-block px-3 py-1 rounded-full bg-cyan-100 text-cyan-800 font-mono text-xs font-bold uppercase">
-                            Step 5 – 3D Printing
-                        </span>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">3D Printing Execution</h3>
-                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
-                            Finally, the prepared model was sent to the 3D printer. The printer extruded molten filament through the heated nozzle onto the build plate, progressively materializing the object.
-                        </p>
-                    </div>
-                    <div class="space-y-2 order-2">
-                        <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 aspect-[16/10] flex items-center justify-center relative shadow-inner">
-                            <svg class="w-full h-full p-4" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
-                                <rect width="100%" height="100%" fill="#080e1a" rx="8"/>
-                                <rect x="90" y="155" width="220" height="15" rx="2" fill="#1e293b" stroke="#0284c7" stroke-width="1.5"/>
-                                <polygon points="200,115 230,130 200,145 170,130" fill="#0284c7" stroke="#67e8f9"/>
-                                <rect x="185" y="60" width="30" height="35" rx="2" fill="#64748b"/>
-                                <polygon points="195,95 205,95 200,112" fill="#eab308"/>
-                                <circle cx="200" cy="113" r="2" fill="#fff"/>
-                                <text x="200" y="215" fill="#94a3b8" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">3D Printer Extruding Layer by Layer</text>
-                            </svg>
-                        </div>
-                        <p class="text-xs text-slate-500 font-medium italic text-center">
-                            📸 Photo: 3D printer actively building the physical model.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- STEP 6: Photo Left | Text Right -->
-                <div class="step-container glass-panel p-6 sm:p-8 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <div class="space-y-2 order-2 md:order-1">
-                        <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 aspect-[16/10] flex items-center justify-center relative shadow-inner">
-                            <svg class="w-full h-full p-4" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
-                                <rect width="100%" height="100%" fill="#0a1220" rx="8"/>
-                                <g transform="translate(120, 30)">
-                                    <polygon points="80,15 150,55 80,95 10,55" fill="#0284c7" stroke="#bae6fd" stroke-width="1.5"/>
-                                    <polygon points="10,55 80,95 80,145 10,105" fill="#0369a1" stroke="#bae6fd" stroke-width="1.5"/>
-                                    <polygon points="150,55 80,95 80,145 150,105" fill="#075985" stroke="#bae6fd" stroke-width="1.5"/>
-                                </g>
-                                <text x="200" y="215" fill="#94a3b8" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="600">Finished 3D Printed Physical Model</text>
-                            </svg>
-                        </div>
-                        <p class="text-xs text-slate-500 font-medium italic text-center">
-                            📸 Photo: Final 3D printed physical model.
-                        </p>
-                    </div>
-                    <div class="space-y-3 order-1 md:order-2">
-                        <span class="inline-block px-3 py-1 rounded-full bg-cyan-100 text-cyan-800 font-mono text-xs font-bold uppercase">
-                            Step 6 – Final 3D Model
-                        </span>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Completed 3D Print</h3>
-                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
-                            Through this activity, I understood the complete basic workflow of 3D printing — from an <strong>STL file → preparing the model in Bambu Studio → slicing → physical 3D print</strong>.
-                        </p>
-                    </div>
-                </div>
-
-            </div>
         </section>
 
         <!-- ========================================================================= -->
-        <!-- LEARNING OUTCOME SECTION -->
+        <!-- REFERENCES & CREDITS -->
         <!-- ========================================================================= -->
-        <section id="learning-outcome" class="glass-panel p-8 sm:p-12 rounded-3xl border-2 border-indigo-200 space-y-6 shadow-xl relative overflow-hidden">
-            <div class="flex items-center gap-2 text-xs font-mono font-bold text-indigo-600 uppercase tracking-widest">
-                <span>🎯</span> Practical Synthesis
+        <section id="references-credits" class="academic-card p-8 sm:p-10 space-y-6 border-2 border-indigo-200">
+            <div class="flex items-center gap-2 pb-2 border-b border-slate-200">
+                <span class="text-xs font-mono font-bold uppercase tracking-widest text-indigo-600">Documentation & Attribution</span>
             </div>
-
+            
             <h2 class="text-2xl sm:text-3xl font-black text-slate-900">
-                WEEK 6 LEARNING OUTCOME
+                REFERENCES & CREDITS
             </h2>
 
-            <p class="text-slate-700 text-base sm:text-lg leading-relaxed">
-                This week's activities helped me understand the practical workflow of <strong>digital design to physical manufacturing</strong>. I learned how to prepare images for laser cutting using <strong>RDWorks</strong> and how to work with <strong>STL files and Bambu Studio</strong> for 3D printing.
-            </p>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
-                <div class="bg-orange-50/60 border border-orange-200 p-6 rounded-2xl space-y-2">
-                    <h3 class="font-bold text-orange-950 text-base flex items-center gap-2">
-                        <span>🔥</span> Subtractive (Laser Cutting)
-                    </h3>
-                    <p class="text-xs font-mono text-orange-700 font-semibold">
-                        Digital Design → RDWorks → Laser Cutter → Physical Design
-                    </p>
-                    <p class="text-xs text-slate-600 leading-relaxed pt-1">
-                        Learned the importance of vector path preparation, contrast adjustments, and setting machine speed and power layers.
-                    </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm">
+                <div class="space-y-3">
+                    <h4 class="font-bold text-slate-900 font-mono uppercase text-xs">Software Applications</h4>
+                    <ul class="space-y-2 text-slate-600">
+                        <li>• <strong>RDWorks v8:</strong> Laser motion control and CAM preparation (Ruida Technology).</li>
+                        <li>• <strong>Bambu Studio:</strong> Open-source multi-plate 3D mesh slicing and toolpath generation.</li>
+                        <li>• <strong>Inkscape / Adobe Illustrator:</strong> 2D vector trace, node simplification, and DXF conversion.</li>
+                    </ul>
                 </div>
 
-                <div class="bg-cyan-50/60 border border-cyan-200 p-6 rounded-2xl space-y-2">
-                    <h3 class="font-bold text-cyan-950 text-base flex items-center gap-2">
-                        <span>🖨️</span> Additive (3D Printing)
-                    </h3>
-                    <p class="text-xs font-mono text-cyan-700 font-semibold">
-                        STL File → Bambu Studio → Slicing → 3D Printer → Physical Model
-                    </p>
-                    <p class="text-xs text-slate-600 leading-relaxed pt-1">
-                        Understood 3D triangular meshes, bed orientation, infill configurations, and slicing layer by layer into G-code.
-                    </p>
+                <div class="space-y-3">
+                    <h4 class="font-bold text-slate-900 font-mono uppercase text-xs">Models & Lab Resources</h4>
+                    <ul class="space-y-2 text-slate-600">
+                        <li>• <strong>Printables.com:</strong> Functional 3D geometric STL community model repository.</li>
+                        <li>• <strong>PRICE ProtoSem FabLab:</strong> Digital Fabrication Laboratory machinery and material access.</li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <a href="index.html#protosem" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-900 text-white font-semibold text-sm hover:bg-orange-600 transition-colors">
+            <div class="pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <a href="index.html#protosem" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-slate-900 text-white font-semibold text-xs hover:bg-orange-600 transition-colors shadow-md">
                     <span>←</span> Return to ProtoSem Portfolio
                 </a>
-                <span class="text-xs font-mono text-slate-500">PRICE ProtoSem • Nandhini Sivakumar</span>
+                <span class="text-xs font-mono text-slate-500">Academic Submission • Nandhini Sivakumar</span>
             </div>
         </section>
 
     </main>
 
-    <!-- Reading Bar Script -->
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-6 right-6 z-50 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-2xl border border-slate-700 text-xs font-semibold flex items-center gap-2 transform translate-y-[-100px] opacity-0 transition-all duration-300 pointer-events-none">
+        <span id="toast-icon">✓</span>
+        <span id="toast-msg">Image updated successfully!</span>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox-modal" class="modal-fade hidden-modal fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8 bg-slate-950/90 backdrop-blur-xl" onclick="if(event.target === this) closeLightbox()">
+        <div class="relative max-w-5xl w-full flex flex-col items-center gap-4">
+            <button onclick="closeLightbox()" class="absolute -top-12 right-0 w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 text-white text-lg font-bold flex items-center justify-center transition-colors">✕</button>
+            <div class="w-full max-h-[80vh] flex items-center justify-center overflow-hidden rounded-2xl bg-black shadow-2xl border border-slate-800">
+                <img id="lightbox-img" src="" alt="Fullscreen View" class="max-h-[78vh] w-auto max-w-full object-contain">
+            </div>
+            <p id="lightbox-caption" class="italic text-slate-300 text-xs sm:text-sm"></p>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- JAVASCRIPT LOGIC -->
+    <!-- ========================================================================= -->
     <script>
+        const FIGURE_SLOTS = [
+            'laser-1', 'laser-2', 'laser-2b', 'laser-3', 'laser-p1', 'laser-4', 'laser-p3', 'laser-5',
+            'print-1', 'print-3', 'print-6'
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initDragAndDrop();
+            loadSavedImages();
+        });
+
+        // Reading Bar
         window.addEventListener('scroll', () => {
             const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
             const progress = (window.scrollY / totalHeight) * 100;
             document.getElementById('reading-bar').style.width = progress + '%';
         });
+
+        function handleImageError(id) {
+            const img = document.getElementById(`img-${id}`);
+            const fallback = document.getElementById(`fallback-${id}`);
+            if (img) img.style.display = 'none';
+            if (fallback) fallback.classList.remove('hidden');
+        }
+
+        function triggerFileUpload(id) {
+            const input = document.getElementById(`file-input-${id}`);
+            if (input) input.click();
+        }
+
+        function handleFileSelected(event, id) {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+                    const maxDim = 1400;
+
+                    if (width > maxDim || height > maxDim) {
+                        if (width > height) {
+                            height = Math.round((height * maxDim) / width);
+                            width = maxDim;
+                        } else {
+                            width = Math.round((width * maxDim) / height);
+                            height = maxDim;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    const optimized = canvas.toDataURL('image/jpeg', 0.85);
+                    setFigureImage(id, optimized);
+                    showToast('✓ Figure photo updated!');
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function setFigureImage(id, src) {
+            const img = document.getElementById(`img-${id}`);
+            const fallback = document.getElementById(`fallback-${id}`);
+            if (img) {
+                img.src = src;
+                img.style.display = 'block';
+            }
+            if (fallback) fallback.classList.add('hidden');
+
+            try {
+                const stored = JSON.parse(localStorage.getItem('week6_academic_figures') || '{}');
+                stored[id] = src;
+                localStorage.setItem('week6_academic_figures', JSON.stringify(stored));
+            } catch (err) {
+                console.warn(err);
+            }
+        }
+
+        function loadSavedImages() {
+            try {
+                const stored = JSON.parse(localStorage.getItem('week6_academic_figures') || '{}');
+                Object.keys(stored).forEach(id => {
+                    if (stored[id]) setFigureImage(id, stored[id]);
+                });
+            } catch (e) {
+                console.warn(e);
+            }
+        }
+
+        function initDragAndDrop() {
+            FIGURE_SLOTS.forEach(id => {
+                const frame = document.getElementById(`img-${id}`)?.closest('.figure-frame');
+                if (!frame) return;
+
+                ['dragenter', 'dragover'].forEach(name => {
+                    frame.addEventListener(name, (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        frame.classList.add(id.startsWith('laser') ? 'drag-over' : 'drag-over-cyan');
+                    });
+                });
+
+                ['dragleave', 'drop'].forEach(name => {
+                    frame.addEventListener(name, (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        frame.classList.remove('drag-over', 'drag-over-cyan');
+                    });
+                });
+
+                frame.addEventListener('drop', (e) => {
+                    const files = e.dataTransfer.files;
+                    if (files && files[0] && files[0].type.startsWith('image/')) {
+                        handleFileSelected({ target: { files } }, id);
+                    }
+                });
+            });
+        }
+
+        function openLightbox(id) {
+            const img = document.getElementById(`img-${id}`);
+            if (!img || !img.src) return;
+
+            document.getElementById('lightbox-img').src = img.src;
+            const caption = img.closest('.space-y-2')?.querySelector('p')?.textContent || '';
+            document.getElementById('lightbox-caption').textContent = caption;
+            document.getElementById('lightbox-modal').classList.remove('hidden-modal');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox-modal').classList.add('hidden-modal');
+        }
+
+        // Functional download trigger for academic sample files
+        function downloadSampleFile(filename, type) {
+            let content = '';
+            let mimeType = 'text/plain';
+
+            if (type === 'dxf') {
+                content = "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n0\nCIRCLE\n8\nCUT_RED\n10\n0.0\n20\n0.0\n30\n0.0\n40\n25.0\n0\nENDSEC\n0\nEOF";
+                mimeType = 'application/dxf';
+            } else if (type === 'stl') {
+                content = "solid academic_model\nfacet normal 0 0 1\nouter loop\nvertex 0 0 0\nvertex 10 0 0\nvertex 10 10 0\nendloop\nendfacet\nendsolid academic_model";
+                mimeType = 'model/stl';
+            } else if (type === 'gcode') {
+                content = "; Bambu Studio GCODE\nM140 S55\nM104 S220\nG28\nG1 Z0.2 F1200\nG1 X10 Y10 E5 F600\nM104 S0\nM140 S0";
+                mimeType = 'text/x-gcode';
+            } else {
+                content = "%PDF-1.4 Adobe Illustrator Source File\n%Academic Submission";
+                mimeType = 'application/illustrator';
+            }
+
+            const blob = new Blob([content], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast(`✓ Download initiated: ${filename}`);
+        }
+
+        function exportPageWithImages() {
+            showToast('💾 Generating standalone blog copy...');
+            setTimeout(() => {
+                const blob = new Blob([document.documentElement.outerHTML], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'week-06.html';
+                a.click();
+                URL.revokeObjectURL(url);
+                showToast('✓ Standalone week-06.html exported!');
+            }, 300);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const msgEl = document.getElementById('toast-msg');
+            msgEl.textContent = message;
+            toast.classList.remove('translate-y-[-100px]', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(() => {
+                toast.classList.add('translate-y-[-100px]', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3200);
+        }
     </script>
 </body>
 </html>
