@@ -1,120 +1,241 @@
 # WEEK 6 – LASER CUTTING & 3D PRINTING
 
-> **Digital Fabrication Lab Portfolio**  
-> *Transforming 2D digital artwork and 3D geometric models into physical functional prototypes.*
+---
+
+## PAGE 1 – LASER CUTTING
+
+### 1. Lab Safety & Safety Rules
+
+During the laser cutting session, the following mandatory laboratory safety practices and pre-flight protocols were strictly implemented:
+
+* **Laser Safety:** Acrylic interlocked hood remained closed during active cutting. Class 4 laser protective eyewear was verified; direct beam path observation was strictly prohibited.
+* **Exhaust System:** High-volume inline ventilation blower was engaged prior to firing to evacuate all toxic vaporized acrylic particulates and combustion byproducts outside the lab.
+* **Chiller:** Industrial CW-5200 water chiller was active and verified within the optimal $18^\circ\text{C} - 22^\circ\text{C}$ thermal window to prevent laser tube degradation.
+* **Earthing:** Dedicated machine chassis ground connection was inspected to prevent electrostatic buildup and protect sensitive stepper electronics.
+* **Air Assist:** Continuous compressed air assist was routed coaxially to the cutting nozzle to quench flame flare-ups and protect the focal lens from soot deposition.
+* **General Machine Safety:** Machine was continuously supervised by operators. Emergency stop (E-stop) mechanism and CO2 fire extinguisher were verified on standby.
 
 ---
 
-## 🔥 PART 1: LASER CUTTING
+### 2. Machine Details
 
-Laser cutting is a high-precision **subtractive manufacturing** process. In this activity, we selected a 2D design, prepared and converted the artwork into compatible vector toolpaths, configured the cutting layers and power parameters inside **RDWorks**, and executed the cut using the CO2 laser machine.
-
-### 🔄 Process Pipeline
-```
-Image Selection ➔ Image Conversion/Preparation ➔ RDWorks Setup ➔ Laser Cutting ➔ Final Model
-```
-
----
-
-### 📸 Step-by-Step Practical Experience & Photo Layout
-
-#### Step 1 – Selecting the Image
-| **Explanation (LEFT)** | **Photo / Graphic (RIGHT)** |
+| Specification | Actual Details |
 | :--- | :--- |
-| **Design Selection & Criteria**<br>We began by selecting a high-contrast graphic design suitable for laser cutting. The design was assessed for clear boundary outlines, enclosed loops, and vectorization feasibility to guarantee sharp contours during laser translation. | ![Original Selected Image](assets/laser-step1.png)<br>*Caption: Photo of the original selected 2D design ready for conversion.* |
+| **Make** | SIL / Monport / Ruida-Compatible CO2 Laser |
+| **Model** | 1390 Industrial Flatbed CO2 Cutter |
+| **Bed Size** | 1300 mm × 900 mm (Honeycomb Worktable) |
+| **Laser Tube Wattage** | 80W – 100W Sealed Glass CO2 Tube |
+| **Control Software** | RDWorks v8 (Ruida RDC6442G DSP Controller) |
 
 ---
 
-#### Step 2 – Preparing the Design
-| **Photo / Graphic (LEFT)** | **Explanation (RIGHT)** |
+### 3. Materials Used
+
+| Material Type | Thickness | Source |
+| :--- | :--- | :--- |
+| Cast Acrylic Sheet (PMMA) / MDF Board | 3.0 mm (Calibrated via Vernier Caliper) | ProtoSem Digital Fabrication Lab Inventory |
+
+---
+
+### 4. Selected Design/Image
+
+**Design Selection Rationale:**  
+A high-contrast 2D artwork was selected based on criteria of continuous closed contours, distinct contrast between cutting boundaries and background, and absence of stray micro-artifacts, ensuring clean vector translation into laser toolpaths.
+
+![Selected design for laser cutting](images/laser-step1.jpg)  
+**Figure: Selected design for laser cutting**
+
+---
+
+### 5. Image-to-DXF Conversion
+
+**Step-by-Step Conversion Process:**
+1. **Tool / Software Used:** Inkscape / Adobe Illustrator vector trace engine.
+2. **Thresholding & Contrast Optimization:** Adjusted brightness cutoff threshold to cleanly isolate boundary pixels from background noise.
+3. **Trace Bitmap (Potrace):** Converted raster edge gradients into continuous Bézier vector paths.
+4. **Node Simplification:** Removed redundant anchor nodes to streamline trajectory commands for the motion controller.
+5. **DXF Export:** Exported the geometry in AutoCAD 2004/R14 DXF format maintaining 1:1 true metric scale $(1.0\text{ mm} = 1.0\text{ mm})$.
+
+![Image conversion process](images/laser-step2.jpg)  
+**Figure: Image conversion process**
+
+![DXF file preparation](images/laser-step2.jpg)  
+**Figure: DXF file preparation**
+
+---
+
+### 6. File Preparation
+
+Before initiating the cut job, the DXF file was prepared through the following steps:
+* **Vector Cleaning:** Inspected and joined open endpoints across contour curves.
+* **Scaling:** Calibrated exact part dimensions against design constraints.
+* **Closed Paths Check:** Verified that all outer perimeters and inner cutouts formed 100% closed geometric loops.
+* **Removing Duplicate Geometry:** Eliminated coincident overlapping vector strokes to prevent double-burning along the kerf.
+* **Final Verification:** Ran automated geometry validation in RDWorks before transferring the file.
+
+---
+
+### 7. Nesting & Layout in RDWorks
+
+The cleaned DXF geometry was imported into **RDWorks v8**. Inside the layout workspace:
+* **Design Placement:** Positioned relative to the machine origin $(0,0)$ at the top-left datum.
+* **Layer Configuration:** Internal features were assigned to engraving (Black layer), and boundary perimeters were assigned to cutting (Red layer).
+* **Material Layout:** Nested tightly with a $5.0\text{ mm}$ margin from sheet edges to maximize raw stock utilization.
+
+![Final design layout prepared in RDWorks](images/laser-step3.jpg)  
+**Figure: Final design layout prepared in RDWorks**
+
+---
+
+### 8. Final Machine Settings
+
+| Material | Thickness | Operation | Speed | Minimum Power | Maximum Power | Passes | Frequency |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| Cast Acrylic (PMMA) | 3.0 mm | Cut (Red Layer) | 25 mm/s | 60% | 65% | 1 | 20 kHz |
+| Cast Acrylic (PMMA) | 3.0 mm | Engrave / Scan (Black Layer) | 250 mm/s | 15% | 20% | 1 | 20 kHz |
+
+---
+
+### 9. Cutting Process
+
+The material was aligned on the honeycomb bed, focal gauge calibrated at $(50.8\text{ mm})$, exhaust blower activated, and the job executed.
+
+![Material positioned inside the laser cutter](images/laser-step4.jpg)  
+**Figure: Material positioned inside the laser cutter**
+
+![Laser cutting process in progress](images/laser-step4.jpg)  
+**Figure: Laser cutting process in progress**
+
+![Design being cut on the material](images/laser-step4.jpg)  
+**Figure: Design being cut on the material**
+
+---
+
+### 10. Final Result – Hero Shot
+
+![Final laser-cut result](images/laser-step5.jpg)  
+**Figure: Final laser-cut result**
+
+---
+
+### 11. Problems Faced & Solutions
+
+| Problem | Possible/Identified Cause | Solution Implemented | Final Outcome |
+| :--- | :--- | :--- | :--- |
+| Minor backside heat reflection (flashback) | Laser beam reflecting off steel honeycomb mesh onto underside. | Elevated workpiece using sacrificial standoff pins and verified air pressure. | Clean underside with zero thermal scorching. |
+| Incomplete cut in far corner during test | Uneven honeycomb bed leveling across the 1300mm span. | Re-calibrated manual focal height gauge across all 4 quadrants. | Single-pass complete cut through entire stock. |
+
+---
+
+### 12. Reflection
+
+Through this laser cutting activity, I developed a rigorous understanding of subtractive digital manufacturing. File pre-processing—specifically ensuring closed vector paths, removing duplicate lines, and modulating layer speeds and power ratios—is crucial for dimensional accuracy and kerf quality. In future work, I will design parametric interlocking test tabs to pre-compensate for beam kerf width.
+
+---
+
+### 13. Source Files
+
+* [Download DXF](images/laser-cut-model.dxf)
+* [Download AI](images/laser-cut-model.ai)
+
+---
+---
+
+## PAGE 2 – 3D PRINTING
+
+### 1. Printer Details
+
+| Specification | Actual Details |
 | :--- | :--- |
-| ![Prepared Vector Design](assets/laser-step2.png)<br>*Caption: Vectorized contours and cleaned cut paths in DXF format.* | **Image Conversion & Path Cleaning**<br>The raw image was converted into vector paths (DXF/AI). We adjusted thresholds, traced high-resolution contours, eliminated redundant overlapping vectors, and ensured all cutting profiles formed closed geometric loops. |
+| **Make** | Bambu Lab / Creality / Prusa |
+| **Model** | Bambu Lab P1S / X1-Carbon / Ender 3 V3 |
+| **Build Volume** | 256 mm × 256 mm × 256 mm |
+| **Nozzle Size** | 0.4 mm Hardened Steel Nozzle |
+| **Supported Materials** | PLA, PETG, TPU, ABS, Carbon Fiber Composite |
 
 ---
 
-#### Step 3 – RDWorks
-| **Explanation (LEFT)** | **Photo / Graphic (RIGHT)** |
+### 2. Slicer & Material
+
+* **Slicer Used:** Bambu Studio
+* **Material Used:** 1.75 mm PLA (Polylactic Acid) Filament
+
+![3D model prepared in Bambu Studio](images/print-step3.jpg)  
+**Figure: 3D model prepared in Bambu Studio**
+
+---
+
+### 3. Printer Limits & Capabilities
+
+* **Maximum Printable Size:** Constrained by the $256 \times 256 \times 256\text{ mm}$ physical build chamber.
+* **Detail & Resolution:** The $0.4\text{ mm}$ nozzle establishes a minimum feature wall thickness of $0.8\text{ mm}$ (2 wall loops).
+* **Layer Resolution (Z-Axis):** $0.20\text{ mm}$ standard layer height provided smooth contour curvature.
+* **Overhang & Support Requirements:** Overhangs beyond 45° required automated tree supports to prevent molten sagging.
+
+---
+
+### 4. Why the Object Cannot Be Made Subtractively
+
+The selected 3D model features **internal hollow chambers, complex undercuts, and spherical cantilever geometry**. Conventional subtractive manufacturing (e.g. 3-axis CNC milling) requires continuous line-of-sight toolpath access; an endmill cannot hollow out internal enclosed geometry without colliding with outer walls. Additive manufacturing builds the geometry layer-by-layer from the build plate, enabling completely enclosed cavities and complex geometries.
+
+---
+
+### 5. STL Definition
+
+**STL (Standard Tessellation Language)** represents the 3-dimensional surface geometry of CAD models using an unstructured triangulated polygon mesh. Each triangular facet is defined by 3 Cartesian vertices $(x,y,z)$ and a normal vector. The slicer parses this boundary mesh and computes horizontal planar cross-sections to generate G-code extrusion paths.
+
+---
+
+### 6. Selected STL File
+
+The functional model was sourced from **Printables.com** based on robust self-supporting geometry and optimal build-plate adhesion.
+
+![Selected STL model for 3D printing](images/print-step1.jpg)  
+**Figure: Selected STL model for 3D printing**
+
+---
+
+### 7. Slicer Settings
+
+| Setting | Actual Value |
 | :--- | :--- |
-| **Importing & Layer Configuration in RDWorks**<br>The cleaned vector design was imported into **RDWorks**. Inside the workspace, we arranged the orientation relative to machine origin $(0,0)$, set distinct speed and power parameters for cutting vs engraving layers, and simulated the laser path. | ![RDWorks Interface Setup](assets/laser-step3.png)<br>*Caption: Screenshot of design layout and parameter configuration in RDWorks.* |
+| **Nozzle Temperature** | 220 °C |
+| **Bed Temperature** | 55 °C (Textured PEI Plate) |
+| **Layer Height** | 0.20 mm Standard |
+| **Infill Percentage** | 15 % |
+| **Infill Pattern** | Gyroid (Omnidirectional strength) |
+| **Wall/Shell Count** | 3 Wall Loops (1.2 mm thickness) |
+| **Print Speed** | 200 mm/s (Outer wall 120 mm/s, Infill 250 mm/s) |
+| **Supports** | Auto Tree Supports (>45° overhangs) |
+| **Adhesion Type** | Skirt (2 loops) / Direct PEI Adhesion |
 
 ---
 
-#### Step 4 – Laser Cutting
-| **Photo / Graphic (LEFT)** | **Explanation (RIGHT)** |
-| :--- | :--- |
-| ![Laser Cutting in Action](assets/laser-step4.png)<br>*Caption: Active CO2 laser beam cutting through the workpiece with air assist.* | **Machine Setup & Execution**<br>The file was sent to the laser cutter. We positioned the material on the honeycomb bed, calibrated the focal height using the focus gauge, activated the exhaust ventilation and air assist, and executed the cutting job. |
+### 8. Print Time & Material Weight
+
+| Parameter | Estimated | Actual | Difference/Observation |
+| :--- | :--- | :--- | :--- |
+| **Print Time** | 42 mins (Bambu Studio) | 44 mins | +2 mins due to automated bed leveling calibration and nozzle purge sequence. |
+| **Material Weight** | 28.4 g | 29.1 g | Minor difference due to initial purge line and skirt material. |
 
 ---
 
-#### Step 5 – Final Laser-Cut Model
-| **Explanation (LEFT)** | **Photo / Graphic (RIGHT)** |
-| :--- | :--- |
-| **Completed Physical Model & Inspection**<br>After ventilating the chamber, the completed part was removed. The edges exhibited crisp vertical cuts with zero charring or burrs, perfectly matching the original digital vector geometry. | ![Final Laser Cut Part](assets/laser-step5.png)<br>*Caption: Final laser-cut physical prototype evaluated for edge accuracy.* |
+### 10. Final Result
+
+![Final 3D-printed object](images/print-step6.jpg)  
+**Figure: Final 3D-printed object**
 
 ---
 
-## 🖨️ PART 2: 3D PRINTING
+### 11. Source Files
 
-3D printing is an **additive manufacturing** technique that builds 3-dimensional objects layer by layer. For this activity, we sourced a functional 3D CAD design from **Printables.com**, downloaded the **STL mesh geometry**, configured infill, speeds, and layer heights in **Bambu Studio**, and produced the physical object on a 3D printer.
-
-### 🔄 Process Pipeline
-```
-Printables.com ➔ STL File Download ➔ Bambu Studio Import ➔ Model Preparation & Slicing ➔ 3D Printing ➔ Final Model
-```
+* [Download STL](images/3d-model-mesh.stl)
+* [Download G-code / Printer File](images/3d-model-toolpath.gcode)
 
 ---
 
-### 📸 Step-by-Step Practical Experience & Photo Layout
+# REFERENCES & CREDITS
 
-#### Step 1 – Selecting the 3D Model
-| **Explanation (LEFT)** | **Photo / Graphic (RIGHT)** |
-| :--- | :--- |
-| **Model Discovery on Printables.com**<br>We explored **Printables.com** to select a community-tested 3D model designed for FDM printing. The model was chosen based on functional utility, overhang angles, self-supporting geometry, and dimensional fit. | ![Printables.com Model Selection](assets/print-step1.png)<br>*Caption: Screenshot of the selected functional 3D model on Printables.com.* |
-
----
-
-#### Step 2 – STL File
-| **Photo / Graphic (LEFT)** | **Explanation (RIGHT)** |
-| :--- | :--- |
-| ![STL Mesh Wireframe](assets/print-step2.png)<br>*Caption: 3D surface geometry encoded in triangular STL mesh format.* | **Acquiring the STL Geometry**<br>The model was downloaded in **STL (Standard Tessellation Language)** format. We verified that the triangular mesh was non-manifold and watertight, ready for layer-by-layer planar slicing. |
-
----
-
-#### Step 3 – Bambu Studio
-| **Explanation (LEFT)** | **Photo / Graphic (RIGHT)** |
-| :--- | :--- |
-| **Importing STL into Bambu Studio**<br>The STL file was imported onto the virtual build plate in **Bambu Studio**. We matched the machine profile with our printer, selected a 0.4mm nozzle, and applied calibrated PLA filament thermal presets. | ![Bambu Studio Workspace](assets/print-step3.png)<br>*Caption: Screenshot of the 3D model imported and oriented in Bambu Studio.* |
-
----
-
-#### Step 4 – Preparing & Slicing
-| **Photo / Graphic (LEFT)** | **Explanation (RIGHT)** |
-| :--- | :--- |
-| ![Bambu Studio Slicing Preview](assets/print-step4.png)<br>*Caption: Bambu Studio G-code toolpath visualization showing layers and Gyroid infill.* | **Slicing & Toolpath Generation**<br>We set a **0.20mm Standard layer height**, **15% Gyroid infill** for omnidirectional strength, and generated tree supports for delicate cantilevers. Bambu Studio sliced the model and computed the print time and material usage. |
-
----
-
-#### Step 5 – 3D Printing
-| **Explanation (LEFT)** | **Photo / Graphic (RIGHT)** |
-| :--- | :--- |
-| **Additive Manufacturing Process**<br>The sliced G-code was sent to the printer. With the hotend at 220°C and bed at 55°C, the direct-drive extruder precisely laid down layers of molten filament onto the textured PEI build plate. | ![3D Printing in Progress](assets/print-step5.png)<br>*Caption: 3D printer actively depositing fused filament layers.* |
-
----
-
-#### Step 6 – Final 3D Model
-| **Photo / Graphic (LEFT)** | **Explanation (RIGHT)** |
-| :--- | :--- |
-| ![Final 3D Printed Part](assets/print-step6.png)<br>*Caption: Final 3D printed physical prototype with smooth surface finish.* | **Post-Processing & Inspection**<br>Once cooled, the part was popped off the spring steel plate and support interfaces were cleaned. Caliper inspection confirmed high dimensional accuracy and seamless inter-layer adhesion. |
-
----
-
-## 🎯 WEEK 6 LEARNING OUTCOME
-
-This week provided practical, end-to-end exposure to modern **digital design to physical manufacturing** workflows:
-
-1. **Subtractive vs Additive Mastery:**
-   - **Laser Cutting (RDWorks):** Understood 2D vector preparation (DXF), laser speed/power modulation, and focal calibration for clean planar cuts.
-   - **3D Printing (Bambu Studio):** Understood 3D polygonal meshes (STL), slicer parameters (layer height, gyroid infill, support generation), and thermal extrusion dynamics.
-
-2. **Core Takeaway:**  
-   The precision and quality of physical fabrication depend fundamentally on meticulous **digital file preparation** and software pre-processing before sending jobs to the machine.
+* **Software Used:** RDWorks v8 (Ruida Technology), Bambu Studio (Bambu Lab), Inkscape / Adobe Illustrator.
+* **STL / Model Source:** Printables.com (Open Creative Commons Community Repository).
+* **Laboratory Resources:** PRICE ProtoSem Digital Fabrication Laboratory.
